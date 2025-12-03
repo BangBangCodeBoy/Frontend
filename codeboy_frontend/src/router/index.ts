@@ -11,7 +11,7 @@ import RankingPage from "@/pages/ranking/RankingPage.vue";
 import IncorrectNotesPage from "@/pages/incorrectNote/IncorrectNotePage.vue";
 import MyPage from "@/pages/myPage/MyPage.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
-import AppLayout from "@/shared/components/layout/AppLayout.vue";
+import AppLayout from "@/app/layout/AppLayout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
