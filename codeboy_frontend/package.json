@@ -13,10 +13,20 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "tailwindcss": "^3.4.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.555.0",
+    "lucide-vue-next": "^0.555.0",
+    "reka-ui": "^2.6.1",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "autoprefixer": "^10.4.22",
     "postcss": "^8.5.6",
