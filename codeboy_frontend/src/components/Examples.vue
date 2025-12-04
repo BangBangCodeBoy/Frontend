@@ -11,8 +11,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-</script>
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+</script>
 <template>
   <div>
     <Button variant="default" size="default" weight="bold">버튼1</Button>
@@ -26,7 +37,7 @@ import {
   </div>
 
   <Input type="password" />
-
+  <!-- 
   <Dialog>
     <form>
       <DialogTrigger as-child>
@@ -57,7 +68,26 @@ import {
         </DialogFooter>
       </DialogContent>
     </form>
-  </Dialog>
+  </Dialog> -->
+
+  <AlertDialog>
+    <AlertDialogTrigger as-child>
+      <Button variant="outline"> Show Dialog </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This action cannot be undone. This will permanently delete your
+          account and remove your data from our servers.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction>Continue</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
 </template>
 
 <style lang="scss" scoped></style>
