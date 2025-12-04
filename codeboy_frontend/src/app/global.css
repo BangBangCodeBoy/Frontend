@@ -22,7 +22,7 @@
   font-style: normal;
 }
 
-@layer components {
+@layer utilities {
   .Title1 {
     font-family: "Pretendard";
     font-size: 35px;
