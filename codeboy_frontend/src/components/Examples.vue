@@ -2,6 +2,18 @@
 import Button from "@/components/ui/button/Button.vue";
 import Input from "@/components/ui/input/Input.vue";
 import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "@/components/ui/field";
+import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -11,7 +23,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,9 +42,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import QuestionCreationForm from "@/components/QuestionCreationForm.vue";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 </script>
 <template>
-  <div>
+  <QuestionCreationForm />
+  <!-- <div>
     <Button variant="default" size="default" weight="bold">버튼1</Button>
     <Button variant="ghost">버튼3</Button>
     <Button variant="outline">버튼4</Button>
@@ -36,7 +59,7 @@ import {
     <Input type="email" placeholder="email" />
   </div>
 
-  <Input type="password" />
+  <Input type="password" /> -->
   <!-- 
   <Dialog>
     <form>
@@ -70,7 +93,7 @@ import {
     </form>
   </Dialog> -->
 
-  <AlertDialog>
+  <!-- <AlertDialog>
     <AlertDialogTrigger as-child>
       <Button variant="outline"> Show Dialog </Button>
     </AlertDialogTrigger>
@@ -87,7 +110,7 @@ import {
         <AlertDialogAction>Continue</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
-  </AlertDialog>
+  </AlertDialog> -->
 </template>
 
 <style lang="scss" scoped></style>
