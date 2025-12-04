@@ -45,9 +45,13 @@ import {
 import QuestionCreationForm from "@/components/QuestionCreationForm.vue";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import NavigationBar from "@/shared/components/ui/NavigationBar.vue";
+import BottomNav from "@/shared/components/ui/BottomNav.vue";
 </script>
 <template>
-  <QuestionCreationForm />
+  <BottomNav />
+  <!-- <NavigationBar /> -->
+  <!-- <QuestionCreationForm /> -->
   <!-- <div>
     <Button variant="default" size="default" weight="bold">버튼1</Button>
     <Button variant="ghost">버튼3</Button>
