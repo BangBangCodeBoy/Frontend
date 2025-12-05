@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { PATH } from "@/shared/constants/paths";
-import QuizRoomsPage from "@/pages/quizroom/QuizRoomsPage.vue";
 import LoginPage from "@/pages/auth/LoginPage.vue";
 import SignupPage from "@/pages/auth/SignupPage.vue";
 import ProblemPage from "@/pages/problem/ProblemPage.vue";
 import ProblemSetPage from "@/pages/problem/ProblemSetPage.vue";
 import ProblemsetCommentPage from "@/pages/problem/ProblemsetCommentPage.vue";
-import QuizRoomPage from "@/pages/quizroom/QuizRoomPage.vue";
+import QuizRoomPage from "@/pages/quiz-room/QuizRoomPage.vue";
+import QuizRoomsPage from "@/pages/quiz-room/QuizRoomsPage.vue";
 import RankingPage from "@/pages/ranking/RankingPage.vue";
 import IncorrectNotesPage from "@/pages/incorrectNote/IncorrectNotePage.vue";
 import MyPage from "@/pages/myPage/MyPage.vue";

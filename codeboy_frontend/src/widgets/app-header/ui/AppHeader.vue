@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HeaderLogo } from "@/assets/icons";
+import { HeaderLogo } from "@/assets/icons/logo";
 import { Profile } from "@/assets/icons/nav";
 import { RouterLink } from "vue-router";
 </script>

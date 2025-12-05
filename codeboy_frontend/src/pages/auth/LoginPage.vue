@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SplashLogo } from "@/assets/icons";
+import { SplashLogo } from "@/assets/icons/logo";
 import LoginForm from "@/features/auth/ui/LoginForm.vue";
 </script>
 
