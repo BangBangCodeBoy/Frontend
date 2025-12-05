@@ -17,7 +17,7 @@ import Button from "@/components/ui/button/Button.vue";
     <!-- actions -->
     <div class="flex flex-col gap-3 w-full max-w-sm">
       <Button variant="default">Login</Button>
-      <Button variant="outline">Sign in</Button>
+      <Button variant="outline">Sign up</Button>
     </div>
   </div>
 </template>

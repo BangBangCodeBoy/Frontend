@@ -4,20 +4,19 @@ import Examples from "@/components/Examples.vue";
 import LoginForm from "@/features/auth/ui/LoginForm.vue";
 import AppHeader from "@/widgets/app-header/ui/AppHeader.vue";
 import BottomNav from "@/widgets/bottom-nav/ui/BottomNav.vue";
+import SignInForm from "@/features/auth/ui/SignInForm.vue";
+import SignUpForm from "@/features/auth/ui/SignUpForm.vue";
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col">
     <AppHeader />
-    <main className="m-auto w-full max-w-175 border-x px-4 py-6 ">
-      <h1>레이아웃페이지</h1>
-      <LoginForm />
-      <Examples />
-
+    <main className="m-auto w-full max-w-175 border-x px-4 py-6 flex-1 pb-20">
       <RouterView />
     </main>
     <BottomNav />
   </div>
 </template>
+
 ∏
 <style scoped></style>
