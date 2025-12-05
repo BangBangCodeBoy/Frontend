@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
-<template><div></div></template>
+<template><h1>퀴즈방 페이지</h1></template>
 
 <style scoped></style>

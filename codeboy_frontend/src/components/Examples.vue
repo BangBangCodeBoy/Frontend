@@ -49,7 +49,7 @@ import NavigationBar from "@/shared/components/ui/NavigationBar.vue";
 import BottomNav from "@/shared/components/ui/BottomNav.vue";
 </script>
 <template>
-  <BottomNav />
+  <!-- <BottomNav /> -->
   <!-- <NavigationBar /> -->
   <!-- <QuestionCreationForm /> -->
   <!-- <div>
