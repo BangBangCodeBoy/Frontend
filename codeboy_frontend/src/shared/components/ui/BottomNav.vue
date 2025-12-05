@@ -1,21 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import {
   Home,
   Hat,
   Trophy,
   Pencil,
-  Profile,
   OrangeHat,
   OrangeHome,
   OrangePencil,
-  OrangeProfile,
   OrangeTrophy,
 } from "@/assets/icons/nav";
-import { PATH } from "@/shared/constants/paths";
-import router from "@/router";
-
-const activeIndex = ref(0);
 
 const tabs = [
   { label: "홈", defaultIcon: Home, activeIcon: OrangeHome, name: "home" },
@@ -37,7 +30,6 @@ const tabs = [
     activeIcon: OrangePencil,
     name: "incorrectNotes",
   },
-  // { label: "마이페이지", defaultIcon: Profile, activeIcon: OrangeProfile },
 ];
 </script>
 
@@ -49,12 +41,10 @@ const tabs = [
           :to="{ name: tab.name }"
           class="w-full flex flex-col items-center gap-1 py-2"
         >
-          <!-- 아이콘 -->
           <component
             :is="$route.name === tab.name ? tab.activeIcon : tab.defaultIcon"
           />
 
-          <!-- 텍스트 -->
           <span
             class="Body2"
             :class="
