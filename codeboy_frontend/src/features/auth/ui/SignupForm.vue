@@ -11,28 +11,23 @@ import Button from "@/components/ui/button/Button.vue";
     <!-- form area -->
     <div class="flex flex-col gap-5 w-full max-w-sm mb-10">
       <div class="flex flex-col gap-1">
-        <label class="Body2 text-gray-600">ID</label>
-        <Input placeholder="ID를 입력해주세요." />
+        <Input placeholder="ID" variant="gray" />
       </div>
 
       <div class="flex flex-col gap-1">
-        <label class="Body2 text-gray-600">비밀번호</label>
-        <Input placeholder="비밀번호를 입력해주세요" type="password" />
+        <Input placeholder="비밀번호" type="password" variant="gray" />
       </div>
 
       <div class="flex flex-col gap-1">
-        <label class="Body2 text-gray-600">비밀번호 확인</label>
-        <Input placeholder="비밀번호를 입력해주세요" type="password" />
+        <Input placeholder="비밀번호 확인" type="password" variant="gray" />
       </div>
 
       <div class="flex flex-col gap-1">
-        <label class="Body2 text-gray-600">닉네임</label>
-        <Input placeholder="닉네임을 입력해주세요." />
+        <Input placeholder="닉네임" variant="gray" />
       </div>
 
       <div class="flex flex-col gap-1">
-        <label class="Body2 text-gray-600">Email</label>
-        <Input placeholder="이메일을 입력해주세요" type="email" />
+        <Input placeholder="이메일" type="email" variant="gray" />
       </div>
     </div>
 
