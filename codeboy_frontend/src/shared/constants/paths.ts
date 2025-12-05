@@ -6,6 +6,7 @@ export const PATH = {
   PROBLEM_SETS_ID: "problem-sets/:id",
   PROBLEM_SETS_ID_COMMENTS: "problem-sets/:id/comments",
   QUIZROOM: "quizroom/:id",
+  WAITING_ROOM: "/waiting-room",
   RANKING: "ranking",
   INCORRECT_NOTES: "incorrect-notes",
   MY_PAGE: "my-page",
