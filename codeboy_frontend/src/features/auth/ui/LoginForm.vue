@@ -4,14 +4,14 @@ import Button from "@/components/ui/button/Button.vue";
 </script>
 
 <template>
-  <div class="flex flex-col items-center px-6 pt-20">
+  <div class="flex flex-col items-center px-6">
     <!-- title -->
     <span class="Title2 mb-8">Login</span>
 
     <!-- form area -->
     <div class="flex flex-col gap-4 w-full max-w-sm mb-8">
-      <Input placeholder="ID" />
-      <Input placeholder="Password" type="password" />
+      <Input placeholder="ID" variant="gray" />
+      <Input placeholder="Password" type="password" variant="gray" />
     </div>
 
     <!-- actions -->

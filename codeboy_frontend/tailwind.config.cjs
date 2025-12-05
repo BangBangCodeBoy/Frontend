@@ -64,6 +64,9 @@ module.exports = {
           300: "#22C55D",
           400: "#16A349",
         },
+        beige: {
+          100: "#F0D3AA",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

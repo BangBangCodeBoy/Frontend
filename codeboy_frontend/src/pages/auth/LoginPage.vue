@@ -1,5 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { SplashLogo } from "@/assets/icons";
+import LoginForm from "@/features/auth/ui/LoginForm.vue";
+</script>
 
-<template><div className="px-0"></div></template>
+<template>
+  <div class="bg-beige-100 flex flex-col items-center w-full min-h-screen">
+    <SplashLogo />
+    <LoginForm class="w-full" />
+  </div>
+</template>
 
 <style scoped></style>

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 const props = defineProps<{
   defaultValue?: string | number;
   modelValue?: string | number;
+  variant?: "default" | "gray";
   class?: HTMLAttributes["class"];
 }>();
 
@@ -17,16 +18,20 @@ const modelValue = useVModel(props, "modelValue", emits, {
   passive: true,
   defaultValue: props.defaultValue,
 });
+
+// variant별 스타일 정의
+const baseStyle =
+  "flex h-9 w-full rounded-md border border-input px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
+
+const variants = {
+  default: "bg-transparent",
+  gray: "bg-gray-100",
+};
 </script>
 
 <template>
   <input
     v-model="modelValue"
-    :class="
-      cn(
-        'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
-        props.class
-      )
-    "
+    :class="cn(baseStyle, variants[props.variant ?? 'default'], props.class)"
   />
 </template>
