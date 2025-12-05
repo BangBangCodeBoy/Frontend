@@ -30,7 +30,7 @@ const onSelect = (index: number) => {
 </script>
 
 <template>
-  <nav class="w-full border-t bg-white">
+  <nav class="w-full border-t bg-gray-0 fixed bottom-0 left-0 right-0 z-50">
     <ul class="flex justify-between w-full py-1">
       <li v-for="(tab, index) in tabs" :key="tab.label" class="flex-1">
         <button
