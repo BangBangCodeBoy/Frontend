@@ -3,6 +3,7 @@ import Button from "@/components/ui/button/Button.vue";
 import { QuizRoomCard } from "@/entities/quiz-room";
 import { Reload } from "@/assets/icons";
 import CreateRoomButton from "@/features/quiz-room/ui/CreateRoomButton.vue";
+import CommentItem from "@/entities/commnet/ui/CommentItem.vue";
 
 const rooms = [
   { id: 1, title: "알고리즘 스터디 1반", participants: 3, max: 8 },

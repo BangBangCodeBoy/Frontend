@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import type { ChoiceQuestion } from "@/entities/question/model/question.types";
-import QuizroomProblemCard from "@/widgets/quizroom-problem-card/ui/QuizroomProblemCard.vue";
+import ProblemOptionListCard from "@/widgets/problemCard/ui/ProblemOptionListCard.vue";
 
 const question = ref<ChoiceQuestion>({
   id: 1,
@@ -38,7 +38,7 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col justify-center items-center px-4">
-    <QuizroomProblemCard
+    <ProblemOptionListCard
       :question="question"
       :disabled="isLocked"
       @select="handleSelect"
