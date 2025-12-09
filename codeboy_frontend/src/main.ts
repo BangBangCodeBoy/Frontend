@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "@/app/App.vue";
 import router from "./router";
 import "./app/global.css";
@@ -13,8 +14,9 @@ import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
 library.add(faUserSecret);
 
 const app = createApp(App);
+const pinia = createPinia();
 
 // register components globally
 app.component("font-awesome-icon", FontAwesomeIcon);
 
-createApp(App).use(router).mount("#app");
+createApp(App).use(router).use(pinia).mount("#app");

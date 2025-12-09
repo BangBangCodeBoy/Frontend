@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "generate:api": "orval"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
@@ -21,6 +22,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.555.0",
     "lucide-vue-next": "^0.555.0",
+    "pinia": "^3.0.4",
     "reka-ui": "^2.6.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^3.4.4",
@@ -32,12 +34,15 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@commander-js/extra-typings": "^14.0.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "autoprefixer": "^10.4.22",
+    "commander": "^14.0.2",
+    "orval": "^7.17.0",
     "postcss": "^8.5.6",
     "sass-embedded": "^1.93.3",
     "tailwindcss": "^3.4.18",
