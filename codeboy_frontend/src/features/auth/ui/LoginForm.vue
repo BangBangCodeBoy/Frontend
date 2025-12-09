@@ -3,16 +3,13 @@ import { ref } from "vue";
 import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
 
-// 1) 부모에게 submit 이벤트를 전달하기 위한 emit 선언
 const emit = defineEmits<{
   (e: "submit", payload: { id: string; password: string }): void;
 }>();
 
-// 2) 로컬 상태 생성
 const id = ref("");
 const password = ref("");
 
-// 3) 로그인 버튼 클릭 시 실행할 함수
 function onSubmit() {
   emit("submit", {
     id: id.value,

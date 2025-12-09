@@ -3,24 +3,22 @@ import { SplashLogo } from "@/assets/icons/logo";
 import LoginForm from "@/features/auth/ui/LoginForm.vue";
 
 import { useAuthStore } from "@/features/auth/model/authStore";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 import { ref } from "vue";
 
 const auth = useAuthStore();
 
-const id = ref("");
-const password = ref("");
-
-async function handleLogin() {
+async function handleLogin(payload: { id: string; password: string }) {
   try {
     await auth.login({
-      id: id.value,
-      password: password.value,
+      id: payload.id,
+      password: payload.password,
     });
 
-    alert("로그인 성공!");
-    // 라우터로 이동
-    // router.push("/home");
-  } catch (e) {
+    router.push({ name: "home" });
+  } catch (e: any) {
     alert("로그인 실패: " + e.message);
   }
 }
