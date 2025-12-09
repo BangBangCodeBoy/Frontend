@@ -383,21 +383,6 @@ export interface ApiResponseString {
   data?: string;
 }
 
-/**
- * 회원 DTO
- */
-export interface Member {
-  memberId?: number;
-  id?: string;
-  password?: string;
-  nickname?: string;
-  email?: string;
-  signupDate?: string;
-  isActive?: boolean;
-  deletedDate?: string;
-  role?: string;
-}
-
 export interface IncorrectNoteRequest {
   problemId?: number;
   userProblemId?: number;
@@ -503,11 +488,6 @@ export interface ApiResponseDuplicateCheckResponse {
 
 export interface DuplicateCheckResponse {
   duplicated?: boolean;
-}
-
-export interface LoginRequest {
-  id?: string;
-  password?: string;
 }
 
 /**
@@ -1223,6 +1203,21 @@ export interface ApiResponseMember {
   data?: Member;
 }
 
+/**
+ * 회원 DTO
+ */
+export interface Member {
+  memberId?: number;
+  id?: string;
+  password?: string;
+  nickname?: string;
+  email?: string;
+  signupDate?: string;
+  isActive?: boolean;
+  deletedDate?: string;
+  role?: string;
+}
+
 export type ApiResponseListIncorrectNoteResponseStatus = typeof ApiResponseListIncorrectNoteResponseStatus[keyof typeof ApiResponseListIncorrectNoteResponseStatus];
 
 
@@ -1407,8 +1402,6 @@ export interface ApiResponseListComment {
   data?: Comment[];
 }
 
-export type SignUp200 = { [key: string]: unknown };
-
 export type UpdateMe200 = { [key: string]: unknown };
 
 export type GetProblemsParams = {
@@ -1528,15 +1521,6 @@ const createQuizRoom = <TData = AxiosResponse<ApiResponseLong>>(
     );
   }
 
-const signUp = <TData = AxiosResponse<SignUp200>>(
-    member: Member, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/member`,
-      member,options
-    );
-  }
-
 const getIncorrectNote = <TData = AxiosResponse<ApiResponseListIncorrectNoteResponse>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
@@ -1599,23 +1583,6 @@ const checkEmail = <TData = AxiosResponse<ApiResponseDuplicateCheckResponse>>(
     );
   }
 
-const logout = <TData = AxiosResponse<ApiResponseVoid>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/auth/logout`,undefined,options
-    );
-  }
-
-const login = <TData = AxiosResponse<ApiResponse>>(
-    loginRequest: LoginRequest, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/auth/login`,
-      loginRequest,options
-    );
-  }
-
 const deleteMember = <TData = AxiosResponse<ApiResponseString>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
@@ -1630,6 +1597,14 @@ const updateMember = <TData = AxiosResponse<ApiResponseString>>(
     return axios.patch(
       `/api`,
       memberUpdateRequest,options
+    );
+  }
+
+const getMemberInfo = <TData = AxiosResponse<ApiResponseMember>>(
+     options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.get(
+      `/api/members`,options
     );
   }
 
@@ -1712,14 +1687,6 @@ const getProblems = <TData = AxiosResponse<ApiResponseListProblem>>(
     );
   }
 
-const getMemberInfo = <TData = AxiosResponse<ApiResponseMember>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/members/`,options
-    );
-  }
-
 const deleteUserProblemSet = <TData = AxiosResponse<ApiResponseVoid>>(
     userProblemSetId: number, options?: AxiosRequestConfig
  ): Promise<TData> => {
@@ -1744,7 +1711,7 @@ const deleteIncorrectNote = <TData = AxiosResponse<ApiResponseString>>(
     );
   }
 
-return {updateUserProblem,deleteUserProblem,getAllUserScores,updateUserScore,createUserScore,adminP,getProblemsByUserProblemSetId,createUserProblems,getAllUserProblemSets,createMyUserProblemSet,joinQuizRoom,createQuizRoom,signUp,getIncorrectNote,addIncorrectNote,getAllCommentsById,addComment,checkNickname,checkId,checkEmail,logout,login,deleteMember,updateMember,updateMe,deleteComment,updateComment,getMyUserProblemSet,getUserScore,getQuizRoomList,getQuizRoomMembers,leaveQuizRoom,getProblems,getMemberInfo,deleteUserProblemSet,deleteQuizRoom,deleteIncorrectNote}};
+return {updateUserProblem,deleteUserProblem,getAllUserScores,updateUserScore,createUserScore,adminP,getProblemsByUserProblemSetId,createUserProblems,getAllUserProblemSets,createMyUserProblemSet,joinQuizRoom,createQuizRoom,getIncorrectNote,addIncorrectNote,getAllCommentsById,addComment,checkNickname,checkId,checkEmail,deleteMember,updateMember,getMemberInfo,updateMe,deleteComment,updateComment,getMyUserProblemSet,getUserScore,getQuizRoomList,getQuizRoomMembers,leaveQuizRoom,getProblems,deleteUserProblemSet,deleteQuizRoom,deleteIncorrectNote}};
 export type UpdateUserProblemResult = AxiosResponse<ApiResponseVoid>
 export type DeleteUserProblemResult = AxiosResponse<ApiResponseVoid>
 export type GetAllUserScoresResult = AxiosResponse<ApiResponseListUserScore>
@@ -1757,7 +1724,6 @@ export type GetAllUserProblemSetsResult = AxiosResponse<ApiResponseListUserProbl
 export type CreateMyUserProblemSetResult = AxiosResponse<ApiResponse>
 export type JoinQuizRoomResult = AxiosResponse<ApiResponseString>
 export type CreateQuizRoomResult = AxiosResponse<ApiResponseLong>
-export type SignUpResult = AxiosResponse<SignUp200>
 export type GetIncorrectNoteResult = AxiosResponse<ApiResponseListIncorrectNoteResponse>
 export type AddIncorrectNoteResult = AxiosResponse<ApiResponseLong>
 export type GetAllCommentsByIdResult = AxiosResponse<ApiResponseListComment>
@@ -1765,10 +1731,9 @@ export type AddCommentResult = AxiosResponse<ApiResponseVoid>
 export type CheckNicknameResult = AxiosResponse<ApiResponseDuplicateCheckResponse>
 export type CheckIdResult = AxiosResponse<ApiResponseDuplicateCheckResponse>
 export type CheckEmailResult = AxiosResponse<ApiResponseDuplicateCheckResponse>
-export type LogoutResult = AxiosResponse<ApiResponseVoid>
-export type LoginResult = AxiosResponse<ApiResponse>
 export type DeleteMemberResult = AxiosResponse<ApiResponseString>
 export type UpdateMemberResult = AxiosResponse<ApiResponseString>
+export type GetMemberInfoResult = AxiosResponse<ApiResponseMember>
 export type UpdateMeResult = AxiosResponse<UpdateMe200>
 export type DeleteCommentResult = AxiosResponse<ApiResponseVoid>
 export type UpdateCommentResult = AxiosResponse<ApiResponseVoid>
@@ -1778,7 +1743,6 @@ export type GetQuizRoomListResult = AxiosResponse<ApiResponseListQuizRoom>
 export type GetQuizRoomMembersResult = AxiosResponse<ApiResponseListGetQuizRoomMembersResponse>
 export type LeaveQuizRoomResult = AxiosResponse<ApiResponseString>
 export type GetProblemsResult = AxiosResponse<ApiResponseListProblem>
-export type GetMemberInfoResult = AxiosResponse<ApiResponseMember>
 export type DeleteUserProblemSetResult = AxiosResponse<ApiResponseVoid>
 export type DeleteQuizRoomResult = AxiosResponse<ApiResponseString>
 export type DeleteIncorrectNoteResult = AxiosResponse<ApiResponseString>

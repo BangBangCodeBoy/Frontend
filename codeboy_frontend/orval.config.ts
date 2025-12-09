@@ -8,6 +8,11 @@ export default defineConfig({
       target: "src/shared/api/generated.ts",
       client: "axios",
       clean: true,
+      override: {
+        services: {
+          export: true, // <---- 핵심 옵션
+        },
+      },
     },
   },
 });
