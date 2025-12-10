@@ -3,8 +3,10 @@ import { ref } from "vue";
 import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { useRouter } from "vue-router";
+import { LoginRequest } from "@/shared/api/api";
+
 const emit = defineEmits<{
-  (e: "submit", payload: { id: string; password: string }): void;
+  (e: "submit", payload: LoginRequest): void;
 }>();
 
 const id = ref("");
@@ -12,10 +14,11 @@ const password = ref("");
 const router = useRouter();
 
 function onSubmit() {
-  emit("submit", {
+  const payload: LoginRequest = {
     id: id.value,
     password: password.value,
-  });
+  };
+  emit("submit", payload);
 }
 const goToSignup = () => {
   router.push({ name: "signup" });

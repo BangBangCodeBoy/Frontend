@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import { SplashLogo } from "@/assets/icons/logo";
 import LoginForm from "@/features/auth/ui/LoginForm.vue";
+import { LoginRequest } from "@/shared/api/api";
 
 import { useAuthStore } from "@/features/auth/model/authStore";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-import { ref } from "vue";
 
 const auth = useAuthStore();
 
-async function handleLogin(payload: { id: string; password: string }) {
+async function handleLogin(payload: LoginRequest) {
   try {
-    await auth.login({
-      id: payload.id,
-      password: payload.password,
-    });
+    await auth.login(payload); // 그대로 payload 전달 가능!
 
     router.push({ name: "home" });
   } catch (e: any) {
