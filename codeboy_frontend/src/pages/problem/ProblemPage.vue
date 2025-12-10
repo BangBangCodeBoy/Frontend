@@ -4,7 +4,9 @@ import { computed, ref } from "vue";
 import { Category } from "@/entities/types";
 import ProblemCard from "@/entities/problem/ui/ProblemCard.vue"; // 경로는 프로젝트 구조에 맞게 수정
 import Button from "@/components/ui/button/Button.vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const problems = [
   {
     id: 1,
@@ -25,6 +27,10 @@ const problems = [
 type FilterCategory = Category | "ALL";
 
 const selectedCategory = ref<FilterCategory>("ALL");
+
+const handleClickCreateProblem = () => {
+  router.push({ name: "problemCreate" });
+};
 
 const categoryList: FilterCategory[] = [
   "ALL",
@@ -57,7 +63,9 @@ const filteredProblems = computed(() => {
     <div class="flex items-center justify-between gap-3">
       <h2 class="text-lg font-semibold">시험 대비 문제</h2>
 
-      <Button type="submit" form="dialogForm"> 문제 만들기 </Button>
+      <Button type="submit" form="dialogForm" @click="handleClickCreateProblem">
+        문제 만들기
+      </Button>
     </div>
 
     <!-- 카테고리 필터 버튼 그룹 -->

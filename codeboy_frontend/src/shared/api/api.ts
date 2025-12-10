@@ -34,8 +34,13 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const session = useSessionStore();
+    const noAuthUrls = ["/login", "/api/join", "/auth/signup", "/member/join"];
     const token = session.accessToken;
-    if (token) {
+    if (
+      token &&
+      config.url &&
+      !noAuthUrls.some((url) => config.url!.startsWith(url))
+    ) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

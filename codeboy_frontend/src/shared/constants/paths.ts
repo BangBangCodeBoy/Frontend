@@ -3,6 +3,7 @@ export const PATH = {
   LOGIN: "/login",
   SIGNUP: "/signup",
   PROBLEMS: "problems",
+  PROBLEM_CREATE: "problem-create",
   PROBLEM_SETS_ID: "problem-sets/:id",
   PROBLEM_SETS_ID_COMMENTS: "problem-sets/:id/comments",
   QUIZROOM: "quizroom/:id",
