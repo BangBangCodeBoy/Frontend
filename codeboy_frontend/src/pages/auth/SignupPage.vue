@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/features/auth/model/authStore";
 import SignupForm from "@/features/auth/ui/SignupForm.vue";
 import { ssafyApi } from "@/shared/api/api";
 import { useRouter } from "vue-router";
@@ -9,9 +8,9 @@ const router = useRouter();
 
 async function handleSignup(payload: JoinRequest) {
   try {
-    console.log("요청 값: ", payload);
     await ssafyApi.adminP(payload);
-    router.push({ name: "home" });
+    alert("회원가입 성공:");
+    router.push({ name: "login" });
   } catch (e: any) {
     alert("회원가입 실패:" + e.message);
   }

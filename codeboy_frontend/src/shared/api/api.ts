@@ -1,6 +1,7 @@
 // src/shared/api/api.ts
 import axios from "axios";
 import { getSsafyApi } from "@/shared/api/generated";
+import { useSessionStore } from "@/entities/session/model/sessionStore";
 
 // 백엔드 ApiResponse<T> 구조에 맞는 타입 정의 (수동)
 export interface ApiResponse<T> {
@@ -12,9 +13,8 @@ export interface ApiResponse<T> {
 // LoginFilter에서 내려주는 data DTO에 맞게
 export interface LoginResponse {
   accessToken: string;
+  refreshToken: string;
   memberId: number;
-  id: string;
-  nickname: string;
 }
 
 export interface LoginRequest {
@@ -24,9 +24,24 @@ export interface LoginRequest {
 
 // 공통 axios 인스턴스
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // 예: http://localhost:8080
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
+
+/**
+ * ⭐ [핵심 추가] 자동 Authorization 헤더 부착 인터셉터
+ */
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const session = useSessionStore();
+    const token = session.accessToken;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Swagger 기반 API들
 const generatedApi = getSsafyApi();

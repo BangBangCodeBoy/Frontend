@@ -1,5 +1,12 @@
-<script setup lang="ts"></script>
+<!-- src/pages/mypage/ui/MyPage.vue -->
+<script setup lang="ts">
+import MemberProfileCard from "@/features/member/ui/MemberProfileCard.vue";
+</script>
 
-<template><h1>마이 페이지</h1></template>
-
-<style scoped></style>
+<template>
+  <main class="min-h-screen bg-slate-50">
+    <div class="pt-10 pb-16 px-4">
+      <MemberProfileCard />
+    </div>
+  </main>
+</template>

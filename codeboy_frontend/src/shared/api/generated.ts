@@ -5,8 +5,8 @@
  * <h3>RestAPI 문서 내용을 다음과 같이 제공합니다.</h3>
  * OpenAPI spec version: 1.1.0
  */
+//generated.ts
 import { axiosInstance as axios } from "@/shared/api/api";
-
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
 export type UserProblemCategory =
@@ -374,30 +374,6 @@ export interface ApiResponseLong {
   data?: number;
 }
 
-export interface JoinRequest {
-  id?: string;
-  password?: string;
-  nickname?: string;
-  email?: string;
-}
-
-export interface IncorrectNoteRequest {
-  problemId?: number;
-  userProblemId?: number;
-  isUserProblem?: boolean;
-}
-
-/**
- * 댓글 DTO
- */
-export interface Comment {
-  commentId?: number;
-  memberId?: number;
-  content?: string;
-  commentDate?: string;
-  userProblemSetId?: number;
-}
-
 export interface DuplicateCheckRequest {
   value?: string;
 }
@@ -488,12 +464,35 @@ export interface DuplicateCheckResponse {
   duplicated?: boolean;
 }
 
+export interface JoinRequest {
+  id?: string;
+  password?: string;
+  nickname?: string;
+  email?: string;
+}
+
+export interface IncorrectNoteRequest {
+  problemId?: number;
+  userProblemId?: number;
+  isUserProblem?: boolean;
+}
+
+/**
+ * 댓글 DTO
+ */
+export interface Comment {
+  commentId?: number;
+  memberId?: number;
+  content?: string;
+  commentDate?: string;
+  userProblemSetId?: number;
+}
+
 /**
  * 유저 정보 수정 DTO
  */
 export interface MemberUpdateRequest {
   nickname?: string;
-  id?: string;
   email?: string;
 }
 
@@ -1400,8 +1399,6 @@ export interface ApiResponseListComment {
   data?: Comment[];
 }
 
-export type UpdateMe200 = { [key: string]: unknown };
-
 export type GetProblemsParams = {
   category: GetProblemsCategory;
 };
@@ -1503,6 +1500,37 @@ export const getSsafyApi = () => {
     return axios.post(`/api/quiz-room/create`, undefined, options);
   };
 
+  const checkNickname = <
+    TData = AxiosResponse<ApiResponseDuplicateCheckResponse>
+  >(
+    duplicateCheckRequest: DuplicateCheckRequest,
+    options?: AxiosRequestConfig
+  ): Promise<TData> => {
+    return axios.post(
+      `/api/member/check-nickname`,
+      duplicateCheckRequest,
+      options
+    );
+  };
+
+  const checkId = <TData = AxiosResponse<ApiResponseDuplicateCheckResponse>>(
+    duplicateCheckRequest: DuplicateCheckRequest,
+    options?: AxiosRequestConfig
+  ): Promise<TData> => {
+    return axios.post(`/api/member/check-id`, duplicateCheckRequest, options);
+  };
+
+  const checkEmail = <TData = AxiosResponse<ApiResponseDuplicateCheckResponse>>(
+    duplicateCheckRequest: DuplicateCheckRequest,
+    options?: AxiosRequestConfig
+  ): Promise<TData> => {
+    return axios.post(
+      `/api/member/check-email`,
+      duplicateCheckRequest,
+      options
+    );
+  };
+
   const adminP = <TData = AxiosResponse<ApiResponseLong>>(
     joinRequest: JoinRequest,
     options?: AxiosRequestConfig
@@ -1540,53 +1568,23 @@ export const getSsafyApi = () => {
     return axios.post(`/api/comments/${userProblemSetId}`, comment, options);
   };
 
-  const checkNickname = <
-    TData = AxiosResponse<ApiResponseDuplicateCheckResponse>
-  >(
-    duplicateCheckRequest: DuplicateCheckRequest,
+  const getMemberInfo = <TData = AxiosResponse<ApiResponseMember>>(
     options?: AxiosRequestConfig
   ): Promise<TData> => {
-    return axios.post(`/api/check-nickname`, duplicateCheckRequest, options);
-  };
-
-  const checkId = <TData = AxiosResponse<ApiResponseDuplicateCheckResponse>>(
-    duplicateCheckRequest: DuplicateCheckRequest,
-    options?: AxiosRequestConfig
-  ): Promise<TData> => {
-    return axios.post(`/api/check-id`, duplicateCheckRequest, options);
-  };
-
-  const checkEmail = <TData = AxiosResponse<ApiResponseDuplicateCheckResponse>>(
-    duplicateCheckRequest: DuplicateCheckRequest,
-    options?: AxiosRequestConfig
-  ): Promise<TData> => {
-    return axios.post(`/api/check-email`, duplicateCheckRequest, options);
+    return axios.get(`/api/member`, options);
   };
 
   const deleteMember = <TData = AxiosResponse<ApiResponseString>>(
     options?: AxiosRequestConfig
   ): Promise<TData> => {
-    return axios.delete(`/api`, options);
+    return axios.delete(`/api/member`, options);
   };
 
   const updateMember = <TData = AxiosResponse<ApiResponseString>>(
     memberUpdateRequest: MemberUpdateRequest,
     options?: AxiosRequestConfig
   ): Promise<TData> => {
-    return axios.patch(`/api`, memberUpdateRequest, options);
-  };
-
-  const getMemberInfo = <TData = AxiosResponse<ApiResponseMember>>(
-    options?: AxiosRequestConfig
-  ): Promise<TData> => {
-    return axios.get(`/api/members`, options);
-  };
-
-  const updateMe = <TData = AxiosResponse<UpdateMe200>>(
-    memberUpdateRequest: MemberUpdateRequest,
-    options?: AxiosRequestConfig
-  ): Promise<TData> => {
-    return axios.patch(`/api/members`, memberUpdateRequest, options);
+    return axios.patch(`/api/member`, memberUpdateRequest, options);
   };
 
   const deleteComment = <TData = AxiosResponse<ApiResponseVoid>>(
@@ -1692,18 +1690,17 @@ export const getSsafyApi = () => {
     createMyUserProblemSet,
     joinQuizRoom,
     createQuizRoom,
+    checkNickname,
+    checkId,
+    checkEmail,
     adminP,
     getIncorrectNote,
     addIncorrectNote,
     getAllCommentsById,
     addComment,
-    checkNickname,
-    checkId,
-    checkEmail,
+    getMemberInfo,
     deleteMember,
     updateMember,
-    getMemberInfo,
-    updateMe,
     deleteComment,
     updateComment,
     getMyUserProblemSet,
@@ -1730,20 +1727,19 @@ export type GetAllUserProblemSetsResult =
 export type CreateMyUserProblemSetResult = AxiosResponse<ApiResponse>;
 export type JoinQuizRoomResult = AxiosResponse<ApiResponseString>;
 export type CreateQuizRoomResult = AxiosResponse<ApiResponseLong>;
+export type CheckNicknameResult =
+  AxiosResponse<ApiResponseDuplicateCheckResponse>;
+export type CheckIdResult = AxiosResponse<ApiResponseDuplicateCheckResponse>;
+export type CheckEmailResult = AxiosResponse<ApiResponseDuplicateCheckResponse>;
 export type AdminPResult = AxiosResponse<ApiResponseLong>;
 export type GetIncorrectNoteResult =
   AxiosResponse<ApiResponseListIncorrectNoteResponse>;
 export type AddIncorrectNoteResult = AxiosResponse<ApiResponseLong>;
 export type GetAllCommentsByIdResult = AxiosResponse<ApiResponseListComment>;
 export type AddCommentResult = AxiosResponse<ApiResponseVoid>;
-export type CheckNicknameResult =
-  AxiosResponse<ApiResponseDuplicateCheckResponse>;
-export type CheckIdResult = AxiosResponse<ApiResponseDuplicateCheckResponse>;
-export type CheckEmailResult = AxiosResponse<ApiResponseDuplicateCheckResponse>;
+export type GetMemberInfoResult = AxiosResponse<ApiResponseMember>;
 export type DeleteMemberResult = AxiosResponse<ApiResponseString>;
 export type UpdateMemberResult = AxiosResponse<ApiResponseString>;
-export type GetMemberInfoResult = AxiosResponse<ApiResponseMember>;
-export type UpdateMeResult = AxiosResponse<UpdateMe200>;
 export type DeleteCommentResult = AxiosResponse<ApiResponseVoid>;
 export type UpdateCommentResult = AxiosResponse<ApiResponseVoid>;
 export type GetMyUserProblemSetResult =

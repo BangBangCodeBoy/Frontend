@@ -23,6 +23,7 @@
     "lucide-react": "^0.555.0",
     "lucide-vue-next": "^0.555.0",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "reka-ui": "^2.6.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^3.4.4",
@@ -31,7 +32,8 @@
     "vue": "^3.5.25",
     "vue-router": "^4.6.3",
     "vue-sonner": "^2.0.9",
-    "zod": "^4.1.13"
+    "zod": "^4.1.13",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",

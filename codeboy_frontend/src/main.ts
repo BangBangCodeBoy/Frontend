@@ -3,7 +3,7 @@ import { createPinia } from "pinia";
 import App from "@/app/App.vue";
 import router from "./router";
 import "./app/global.css";
-
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -20,3 +20,4 @@ const pinia = createPinia();
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 createApp(App).use(router).use(pinia).mount("#app");
+pinia.use(piniaPluginPersistedstate);
