@@ -4,7 +4,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import ProblemCard from "@/entities/problem/ui/ProblemCard.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { useRouter } from "vue-router";
-import { useProblemSetList } from "@/features/problem-set/model/useProblemList";
+import { useProblemSetList } from "@/features/problem-set/model/useProblemSetList";
 import { useMemberNickname } from "@/features/member/model/useMemberNickname";
 import ProblemCategoryFilter from "@/features/problem-set/ui/ProblemCategoryFilter.vue";
 import type { FilterCategory } from "@/features/problem-set/model/filterCategory";
@@ -39,6 +39,7 @@ const handleClickCreateProblem = () => {
 };
 
 const handleClickProblem = (id: number) => {
+  router.push({ name: "problemSet", params: { id } });
   console.log("문제 카드 클릭", id);
 };
 

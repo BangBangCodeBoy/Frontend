@@ -3,7 +3,7 @@ import { PATH } from "@/shared/constants/paths";
 import LoginPage from "@/pages/auth/LoginPage.vue";
 import SignupPage from "@/pages/auth/SignupPage.vue";
 import ProblemPage from "@/pages/problem/ProblemPage.vue";
-import ProblemSetPage from "@/pages/problem/ProblemSetPage.vue";
+import ProblemSetSolvePage from "@/pages/problem/ProblemSetSolvePage.vue";
 import ProblemsetCommentPage from "@/pages/problem/ProblemsetCommentPage.vue";
 import QuizRoomPage from "@/pages/quiz-room/QuizRoomPage.vue";
 import QuizRoomsPage from "@/pages/quiz-room/QuizRoomsPage.vue";
@@ -41,7 +41,7 @@ const router = createRouter({
         {
           path: PATH.PROBLEM_SETS_ID,
           name: "problemSet",
-          component: ProblemSetPage,
+          component: ProblemSetSolvePage,
         },
         {
           path: PATH.PROBLEM_SETS_ID_COMMENTS,
