@@ -1524,25 +1524,13 @@ export const getSsafyApi = () => {
     return axios.patch(`/api/member`, memberUpdateRequest, options);
   };
 
-  const deleteComment = <TData = AxiosResponse<ApiResponseVoid>>(
-    userProblemSetId: number,
-    commentId: number,
-    options?: AxiosRequestConfig
-  ): Promise<TData> => {
-    return axios.delete(
-      `/api/comments/${userProblemSetId}/${commentId}`,
-      options
-    );
-  };
-
   const updateComment = <TData = AxiosResponse<ApiResponseVoid>>(
-    userProblemSetId: number,
     commentId: number,
     commentUpdateRequest: CommentUpdateRequest,
     options?: AxiosRequestConfig
   ): Promise<TData> => {
     return axios.patch(
-      `/api/comments/${userProblemSetId}/${commentId}`,
+      `/api/comments/${commentId}`,
       commentUpdateRequest,
       options
     );
@@ -1622,6 +1610,17 @@ export const getSsafyApi = () => {
     return axios.delete(`/api/incorrect-note/${incorrectNoteId}`, options);
   };
 
+  const deleteComment = <TData = AxiosResponse<ApiResponseVoid>>(
+    userProblemSetId: number,
+    commentId: number,
+    options?: AxiosRequestConfig
+  ): Promise<TData> => {
+    return axios.delete(
+      `/api/comments/${userProblemSetId}/${commentId}`,
+      options
+    );
+  };
+
   return {
     updateUserProblem,
     deleteUserProblem,
@@ -1645,7 +1644,6 @@ export const getSsafyApi = () => {
     getMemberInfo,
     deleteMember,
     updateMember,
-    deleteComment,
     updateComment,
     getMyUserProblemSet,
     getUserScore,
@@ -1657,6 +1655,7 @@ export const getSsafyApi = () => {
     deleteUserProblemSet,
     deleteQuizRoom,
     deleteIncorrectNote,
+    deleteComment,
   };
 };
 export type UpdateUserProblemResult = AxiosResponse<ApiResponseVoid>;
@@ -1685,7 +1684,6 @@ export type AddCommentResult = AxiosResponse<ApiResponseVoid>;
 export type GetMemberInfoResult = AxiosResponse<ApiResponseMember>;
 export type DeleteMemberResult = AxiosResponse<ApiResponseString>;
 export type UpdateMemberResult = AxiosResponse<ApiResponseString>;
-export type DeleteCommentResult = AxiosResponse<ApiResponseVoid>;
 export type UpdateCommentResult = AxiosResponse<ApiResponseVoid>;
 export type GetMyUserProblemSetResult =
   AxiosResponse<ApiResponseListUserProblemSet>;
@@ -1699,3 +1697,4 @@ export type GetOneMemberInfoResult = AxiosResponse<ApiResponseMember>;
 export type DeleteUserProblemSetResult = AxiosResponse<ApiResponseVoid>;
 export type DeleteQuizRoomResult = AxiosResponse<ApiResponseString>;
 export type DeleteIncorrectNoteResult = AxiosResponse<ApiResponseString>;
+export type DeleteCommentResult = AxiosResponse<ApiResponseVoid>;

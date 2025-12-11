@@ -6,8 +6,9 @@ import { useCommentList } from "@/features/comment/model/useCommentList";
 import { useAddComment } from "@/features/comment/model/useAddComment";
 import { onMounted, ref, computed } from "vue";
 import { useSessionStore } from "@/entities/session/model/sessionStore";
-import { Comment } from "@/shared/api/generated";
+import { Comment, CommentUpdateRequest } from "@/shared/api/generated";
 import { useDeleteComment } from "@/features/comment/model/useDeleteComment";
+import { useUpdateComment } from "@/features/comment/model/useUpdateComment";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -22,18 +23,25 @@ const props = defineProps<{
 
 // 댓글 리스트 훅
 const { fetchCommentList, isLoading, error, commentList } = useCommentList();
+
+const {
+  fetchComment,
+  isLoading: isAddingComment,
+  error: addError,
+} = useAddComment();
+
 const {
   fetchCommentDelete,
   isLoading: isDeleting,
   error: deleteError,
 } = useDeleteComment();
 
-// 댓글 추가 훅
 const {
-  fetchComment,
-  isLoading: isAddingComment,
-  error: addError,
-} = useAddComment();
+  fetchCommentUpdate,
+  isLoading: isUpdating,
+  error: updateError,
+} = useUpdateComment();
+// 댓글 추가 훅
 
 // 새 댓글 입력값
 const newComment = ref("");
@@ -61,8 +69,23 @@ const handleAddComment = async () => {
   newComment.value = "";
 };
 
-const handleEditComment = (comment: Comment) => {
-  console.log("수정 클릭한 댓글:", comment);
+const handleUpdateComment = async (comment: Comment, newContent: string) => {
+  if (!comment.commentId) return;
+
+  const trimmed = newContent.trim();
+  if (!trimmed) {
+    alert("댓글 내용은 비워둘 수 없습니다.");
+    return;
+  }
+
+  const payload: CommentUpdateRequest = {
+    content: trimmed,
+  };
+
+  await fetchCommentUpdate(comment.commentId, payload);
+
+  // 수정 후 리스트 새로고침
+  await fetchCommentList(props.problemSetId);
 };
 
 const handleDeleteComment = async (comment: Comment) => {
@@ -91,7 +114,7 @@ const handleDeleteComment = async (comment: Comment) => {
           <CommentItem
             :comment="comment"
             :is-own="comment.memberId === myMemberId"
-            @edit="handleEditComment(comment)"
+            @edit="handleEditComment(comment, $event)"
             @delete="handleDeleteComment(comment)"
           />
         </li>
