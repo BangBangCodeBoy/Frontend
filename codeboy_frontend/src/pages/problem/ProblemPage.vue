@@ -1,12 +1,13 @@
-<!-- ProblemList.vue (예시) -->
+<!-- src/pages/problem-set/ui/ProblemList.vue (예시) -->
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { UserProblemSetCategory as Category } from "@/shared/api/generated";
-import ProblemCard from "@/entities/problem/ui/ProblemCard.vue"; // 경로는 프로젝트 구조에 맞게 수정
+import ProblemCard from "@/entities/problem/ui/ProblemCard.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { useRouter } from "vue-router";
 import { useProblemSetList } from "@/features/problem-set/model/useProblemList";
 import { useMemberNickname } from "@/features/member/model/useMemberNickname";
+import ProblemCategoryFilter from "@/features/problem-set/ui/ProblemCategoryFilter.vue";
+import type { FilterCategory } from "@/features/problem-set/model/filterCategory";
 
 const router = useRouter();
 const { problemSetList, isLoading, error, fetchProblemList } =
@@ -31,28 +32,14 @@ watch(
   { immediate: true }
 );
 
-type FilterCategory = Category | "ALL";
-
 const selectedCategory = ref<FilterCategory>("ALL");
 
 const handleClickCreateProblem = () => {
   router.push({ name: "problemCreate" });
 };
 
-const categoryList: FilterCategory[] = [
-  "ALL",
-  Category.INFOENGINEERING,
-  Category.SQLD,
-];
-
 const handleClickProblem = (id: number) => {
   console.log("문제 카드 클릭", id);
-};
-
-const categoryLabelMap: Record<FilterCategory, string> = {
-  ALL: "전체",
-  [Category.INFOENGINEERING]: "정보처리기사",
-  [Category.SQLD]: "SQLD",
 };
 
 const filteredProblems = computed(() => {
@@ -70,28 +57,14 @@ const filteredProblems = computed(() => {
     <div class="flex items-center justify-between gap-3">
       <h2 class="text-lg font-semibold">시험 대비 문제</h2>
 
-      <Button type="submit" form="dialogForm" @click="handleClickCreateProblem">
+      <Button type="button" @click="handleClickCreateProblem">
         문제 만들기
       </Button>
     </div>
 
-    <!-- 카테고리 필터 버튼 그룹 -->
-    <div class="flex items-center justify-end gap-2">
-      <button
-        v-for="cat in categoryList"
-        :key="cat"
-        type="button"
-        class="rounded-full border px-3 py-1 text-xs transition-colors"
-        :class="
-          selectedCategory === cat
-            ? 'border-primary-500 bg-primary-50 text-primary-600'
-            : 'border-gray-200 bg-white text-gray-500 hover:bg-gray-50'
-        "
-        @click="selectedCategory = cat"
-      >
-        {{ categoryLabelMap[cat as FilterCategory] }}
-      </button>
-    </div>
+    <!-- 카테고리 필터 -->
+    <ProblemCategoryFilter v-model="selectedCategory" />
+
     <div v-if="isLoading">불러오는 중...</div>
     <div v-else-if="error">{{ error.message }}</div>
 
@@ -109,5 +82,3 @@ const filteredProblems = computed(() => {
     </div>
   </div>
 </template>
-
-<style scoped></style>
