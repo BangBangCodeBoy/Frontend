@@ -1,6 +1,6 @@
 <!-- ProblemCard.vue -->
 <script setup lang="ts">
-import { Category } from "@/entities/types";
+import { UserProblemSetCategory as Category } from "@/shared/api/generated";
 import type { HTMLAttributes } from "vue";
 import { MessageCircle } from "lucide-vue-next"; // 아이콘 사용 (원치 않으면 제거 가능)
 

@@ -126,14 +126,6 @@ export function useMemberProfile() {
       isUpdating.value = false;
     }
   }
-  async function fetchNickname(memberId: number) {
-    try {
-      const response = await ssafyApi.getOneMemberInfo(memberId);
-      return response.data.data.nickname;
-    } catch {
-      return "Unknown"; // fallback
-    }
-  }
 
   return {
     member,
@@ -144,7 +136,6 @@ export function useMemberProfile() {
     errorMessage,
     successMessage,
     fetchMember,
-    fetchNickname,
     startEdit,
     cancelEdit,
     submitEdit,

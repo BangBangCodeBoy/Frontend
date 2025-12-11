@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import dayjs from "dayjs";
-import { Category } from "@/entities/types";
+import { UserProblemSetCategory as Category } from "@/shared/api/generated";
 import { ssafyApi } from "@/shared/api/api";
 import type { AxiosResponse } from "axios";
 import type { ApiResponse } from "@/shared/api/api";

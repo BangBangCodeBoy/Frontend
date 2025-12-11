@@ -1,6 +1,6 @@
 <!-- src/pages/problem/ProblemSetCreatePage.vue -->
 <script setup lang="ts">
-import { Category } from "@/entities/types";
+import { UserProblemSetCategory as Category } from "@/shared/api/generated";
 import Button from "@/components/ui/button/Button.vue";
 import { Field, FieldSeparator } from "@/components/ui/field";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";

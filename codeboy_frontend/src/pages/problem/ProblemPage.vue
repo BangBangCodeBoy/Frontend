@@ -1,28 +1,35 @@
 <!-- ProblemList.vue (예시) -->
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { Category } from "@/entities/types";
+import { computed, onMounted, ref, watch } from "vue";
+import { UserProblemSetCategory as Category } from "@/shared/api/generated";
 import ProblemCard from "@/entities/problem/ui/ProblemCard.vue"; // 경로는 프로젝트 구조에 맞게 수정
 import Button from "@/components/ui/button/Button.vue";
 import { useRouter } from "vue-router";
+import { useProblemSetList } from "@/features/problem-set/model/useProblemList";
+import { useMemberNickname } from "@/features/member/model/useMemberNickname";
 
 const router = useRouter();
-const problems = [
-  {
-    id: 1,
-    title: "알고리즘 스터디 1반",
-    category: Category.INFOENGINEERING,
-    nickname: "긍긍따",
-    commentCount: 8,
+const { problemSetList, isLoading, error, fetchProblemList } =
+  useProblemSetList();
+const { fetchNickname, getNickname } = useMemberNickname();
+
+onMounted(() => {
+  fetchProblemList();
+});
+
+// 문제 목록이 바뀔 때마다 해당 memberId들의 닉네임을 미리 로드
+watch(
+  problemSetList,
+  (list) => {
+    const ids = Array.from(
+      new Set(list.map((p) => p.memberId).filter((id): id is number => !!id))
+    );
+    ids.forEach((id) => {
+      fetchNickname(id);
+    });
   },
-  {
-    id: 2,
-    title: "알고리즘 스터디 2",
-    category: Category.SQLD,
-    nickname: "민달팽",
-    commentCount: 2,
-  },
-];
+  { immediate: true }
+);
 
 type FilterCategory = Category | "ALL";
 
@@ -49,12 +56,12 @@ const categoryLabelMap: Record<FilterCategory, string> = {
 };
 
 const filteredProblems = computed(() => {
+  const list = problemSetList.value ?? [];
+
   if (selectedCategory.value === "ALL") {
-    return problems;
+    return list;
   }
-  return problems.filter(
-    (problem) => problem.category === selectedCategory.value
-  );
+  return list.filter((problem) => problem.category === selectedCategory.value);
 });
 </script>
 
@@ -85,17 +92,19 @@ const filteredProblems = computed(() => {
         {{ categoryLabelMap[cat as FilterCategory] }}
       </button>
     </div>
+    <div v-if="isLoading">불러오는 중...</div>
+    <div v-else-if="error">{{ error.message }}</div>
 
     <!-- 문제 카드 리스트 -->
-    <div class="flex flex-col gap-2">
+    <div v-else class="flex flex-col gap-2">
       <ProblemCard
         v-for="problem in filteredProblems"
-        :key="problem.id"
-        :title="problem.title"
+        :key="problem.userProblemSetId"
+        :title="problem.problemSetTitle"
         :category="problem.category"
-        :nickname="problem.nickname"
+        :nickname="getNickname(problem.memberId)"
         :comment-count="problem.commentCount"
-        @click="() => handleClickProblem(problem.id)"
+        @click="() => handleClickProblem(problem.userProblemSetId)"
       />
     </div>
   </div>
