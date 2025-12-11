@@ -1,9 +1,29 @@
 <script setup lang="ts">
+import { Comment } from "@/shared/api/generated";
+import { computed, onMounted } from "vue";
+import { useMemberNickname } from "@/features/member/model/useMemberNickname";
+import { ref } from "vue";
+
 const props = defineProps<{
-  content: string; // 댓글 내용
-  nickname: string; // 작성자 닉네임
-  createdAt: string; // 작성일 (YYYY-MM-DD or ISO string)
+  comment: Comment;
 }>();
+
+// 날짜 포맷팅 (예: 2025-12-11 형태로 자르기)
+const createdAt = computed(() => {
+  if (!props.comment.commentDate) return "";
+  // ISO 문자열이라고 가정하고 앞부분만 사용
+  return props.comment.commentDate.slice(0, 10);
+});
+const { fetchNickname, getNickname } = useMemberNickname();
+
+const nickname = ref("");
+
+onMounted(async () => {
+  if (props.comment.memberId) {
+    await fetchNickname(props.comment.memberId);
+    nickname.value = getNickname(props.comment.memberId) ?? "익명";
+  }
+});
 </script>
 
 <template>
@@ -23,7 +43,7 @@ const props = defineProps<{
     </div>
     <!-- 댓글 내용 -->
     <p class="text-sm text-gray-900 whitespace-pre-wrap">
-      {{ content }}
+      {{ props.comment.content }}
     </p>
   </article>
 </template>

@@ -3,10 +3,12 @@ import { computed, onMounted, ref } from "vue";
 import type { ChoiceQuestion } from "@/entities/question/model/question.types";
 import UserProblemCard from "@/widgets/user-problem-card/ui/UserProblemCard.vue";
 import Button from "@/components/ui/button/Button.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useProblemSolvingList } from "@/features/problem-set/model/useProblemSolvingList";
 
 const route = useRoute();
+
+const router = useRouter();
 const { problemList, isLoading, error, fetchProblemList } =
   useProblemSolvingList();
 
@@ -32,11 +34,16 @@ const handleAnswered = (payload: {
 }) => {
   lastResult.value = payload;
 };
-
+// router.push({ name: "problemSet", params: { id } });
 const goNext = () => {
   if (currentIndex.value < problemList.value.length - 1) {
     currentIndex.value++;
     lastResult.value = null;
+  } else {
+    router.push({
+      name: "problemSetComments",
+      params: { problemSetId },
+    });
   }
 };
 </script>
