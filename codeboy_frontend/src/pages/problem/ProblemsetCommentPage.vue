@@ -5,6 +5,9 @@ import CommentItem from "@/entities/commnet/ui/CommentItem.vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCommentList } from "@/features/comment/model/useCommentList";
 import { onMounted } from "vue";
+import { ref } from "vue";
+import { useAddComment } from "@/features/comment/model/useAddComment";
+import { NetworkIcon } from "lucide-vue-next";
 
 const route = useRoute();
 const router = useRouter();
@@ -13,12 +16,30 @@ const problemSetId = Number(route.params.id);
 
 const { fetchCommentList, isLoading, error, commentList } = useCommentList();
 
+const { fetchComment, isLoading : isAddingComment, error: addError } = useAddComment();
+
 onMounted(() => {
   fetchCommentList(problemSetId);
 });
 
 const goIncorrectNote = () => {
   router.push({ name: "incorrectNotes" });
+};
+
+const newComment = ref("");
+
+const handleAddComment = async () => {
+  const content = newComment.value.trim();
+  if (!content) {
+    alert("댓글 내용을 입력해주세요.");
+    return;
+  }
+
+  await fetchComment(problemSetId, { content });
+
+  await fetchCommentList(problemSetId);
+
+  newComment.value = "";
 };
 
 console.log("화면에서 문제 리스트 출력해보기: ", commentList);
@@ -36,8 +57,26 @@ console.log("화면에서 문제 리스트 출력해보기: ", commentList);
     </li>
   </ul>
 
-  <Input />
-  <Button>댓글 작성하기 </Button>
+  <!-- 댓글 작성 영역 -->
+  <div class="mt-4 flex gap-2 items-center">
+    <!-- Input 컴포넌트가 v-model을 지원한다고 가정 -->
+    <Input
+      v-model="newComment"
+      placeholder="댓글을 입력해 주세요."
+      class="flex-1"
+    />
+    <Button
+      :disabled="isAddingComment || !newComment.trim()"
+      @click="handleAddComment"
+    >
+      {{ isAddingComment ? "작성 중..." : "댓글 작성하기" }}
+    </Button>
+  </div>
+
+  <!-- 등록 에러 표시 (선택사항) -->
+  <p v-if="addError" class="mt-2 text-xs text-red-500">
+    {{ addError.message }}
+  </p>
 </template>
 
 <style scoped></style>
