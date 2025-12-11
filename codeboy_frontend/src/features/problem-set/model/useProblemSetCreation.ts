@@ -133,17 +133,16 @@ export function useProblemSetCreation() {
         category: problemSetCategory.value,
       };
 
-      console.log("전달하는 문제세트: ", problemSetPayload);
-      const setRes: AxiosResponse<ApiResponse<{ userProblemSetId: number }>> =
+      const setRes: AxiosResponse<ApiResponse<number>> =
         await ssafyApi.createMyUserProblemSet(problemSetPayload as any);
 
-      if (setRes.data.status !== "OK" || !setRes.data.data) {
+      if (setRes.data.status !== "CREATED" || !setRes.data.data) {
         throw new Error(
           setRes.data.message ?? "문제 세트 생성에 실패했습니다."
         );
       }
 
-      const userProblemSetId = setRes.data.data.userProblemSetId;
+      const userProblemSetId = setRes.data.data;
 
       // 2) 세트에 문제들 일괄 등록
       const problemPayload = allProblems.map((p) => ({
@@ -156,10 +155,8 @@ export function useProblemSetCreation() {
         userProblemSetId,
       }));
 
-      console.log("문제들 보기: ", problemPayload);
-
-      const probRes: AxiosResponse<ApiResponse<void>> =
-        await ssafyApi.createUserProblems(userProblemSetId, problemPayload);
+      const probRes: AxiosResponse<ApiResponse<void>> = 
+      await ssafyApi.createUserProblems(userProblemSetId, problemPayload);
 
       if (probRes.data.status !== "CREATED" && probRes.data.status !== "OK") {
         throw new Error(probRes.data.message ?? "문제 등록에 실패했습니다.");
