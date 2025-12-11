@@ -1,82 +1,45 @@
 <script setup lang="ts">
 import Button from "@/components/ui/button/Button.vue";
-import Input from "@/components/ui/input/Input.vue";
-import CommentItem from "@/entities/commnet/ui/CommentItem.vue";
 import { useRoute, useRouter } from "vue-router";
-import { useCommentList } from "@/features/comment/model/useCommentList";
-import { onMounted } from "vue";
-import { ref } from "vue";
-import { useAddComment } from "@/features/comment/model/useAddComment";
-import { NetworkIcon } from "lucide-vue-next";
+import CommentSection from "@/widgets/commnet-section/ui/CommentSection.vue";
 
 const route = useRoute();
 const router = useRouter();
 
 const problemSetId = Number(route.params.id);
 
-const { fetchCommentList, isLoading, error, commentList } = useCommentList();
-
-const { fetchComment, isLoading : isAddingComment, error: addError } = useAddComment();
-
-onMounted(() => {
-  fetchCommentList(problemSetId);
-});
-
 const goIncorrectNote = () => {
   router.push({ name: "incorrectNotes" });
 };
-
-const newComment = ref("");
-
-const handleAddComment = async () => {
-  const content = newComment.value.trim();
-  if (!content) {
-    alert("댓글 내용을 입력해주세요.");
-    return;
-  }
-
-  await fetchComment(problemSetId, { content });
-
-  await fetchCommentList(problemSetId);
-
-  newComment.value = "";
-};
-
-console.log("화면에서 문제 리스트 출력해보기: ", commentList);
 </script>
 
 <template>
-  <p>문제를 모두 풀었어요</p>
-  <Button @click="goIncorrectNote">틀린 문제 복습하러 가기 </Button>
-
-  <div v-if="isLoading">댓글 불러오는 중...</div>
-  <div v-else-if="error">{{ error.message }}</div>
-  <ul v-else>
-    <li v-for="comment in commentList" :key="comment.commentId">
-      <CommentItem :comment="comment" />
-    </li>
-  </ul>
-
-  <!-- 댓글 작성 영역 -->
-  <div class="mt-4 flex gap-2 items-center">
-    <!-- Input 컴포넌트가 v-model을 지원한다고 가정 -->
-    <Input
-      v-model="newComment"
-      placeholder="댓글을 입력해 주세요."
-      class="flex-1"
-    />
-    <Button
-      :disabled="isAddingComment || !newComment.trim()"
-      @click="handleAddComment"
+  <section class="flex flex-col gap-6">
+    <!-- 상단 결과 카드 -->
+    <header
+      class="flex items-center justify-between gap-4 rounded-2xl border border-primary-100 bg-gradient-to-r from-primary-50 to-primary-100 px-5 py-4 shadow-sm"
     >
-      {{ isAddingComment ? "작성 중..." : "댓글 작성하기" }}
-    </Button>
-  </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-medium text-primary-600">✅ 오늘의 학습 완료</p>
+        <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+          🎉 문제를 모두 풀었어요!
+        </h2>
+        <p class="text-xs text-gray-600">
+          방금 푼 문제 중에서
+          <span class="font-semibold text-primary-700">틀린 문제</span>만 모아서
+          한 번 더 복습해 볼까요?
+        </p>
+      </div>
 
-  <!-- 등록 에러 표시 (선택사항) -->
-  <p v-if="addError" class="mt-2 text-xs text-red-500">
-    {{ addError.message }}
-  </p>
+      <Button
+        @click="goIncorrectNote"
+        class="shrink-0 px-4 py-2 text-sm font-semibold"
+      >
+        틀린 문제 복습하러 가기
+      </Button>
+    </header>
+
+    <!-- 댓글 위젯 -->
+    <CommentSection :problem-set-id="problemSetId" />
+  </section>
 </template>
-
-<style scoped></style>

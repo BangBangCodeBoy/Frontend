@@ -7,11 +7,11 @@ export const useCommentList = () => {
   const isLoading = ref(false);
   const error = ref<Error | null>(null);
 
-  const commentList = ref<Comment[] | null>(null);
+  const commentList = ref<Comment[]>([]);
 
   const fetchCommentList = async (problemSetId: number) => {
     try {
-      commentList.value = null;
+      commentList.value = [];
       isLoading.value = true;
 
       const res: AxiosResponse<ApiResponse<Comment[]>> =
