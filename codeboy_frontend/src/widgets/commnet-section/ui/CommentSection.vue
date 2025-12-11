@@ -5,6 +5,16 @@ import CommentItem from "@/entities/commnet/ui/CommentItem.vue";
 import { useCommentList } from "@/features/comment/model/useCommentList";
 import { useAddComment } from "@/features/comment/model/useAddComment";
 import { onMounted, ref, computed } from "vue";
+import { useSessionStore } from "@/entities/session/model/sessionStore";
+import { Comment } from "@/shared/api/generated";
+import { useDeleteComment } from "@/features/comment/model/useDeleteComment";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+const session = useSessionStore();
+const myMemberId = session.memberId;
+const problemSetId = Number(route.params.id);
 
 const props = defineProps<{
   problemSetId: number;
@@ -12,6 +22,11 @@ const props = defineProps<{
 
 // 댓글 리스트 훅
 const { fetchCommentList, isLoading, error, commentList } = useCommentList();
+const {
+  fetchCommentDelete,
+  isLoading: isDeleting,
+  error: deleteError,
+} = useDeleteComment();
 
 // 댓글 추가 훅
 const {
@@ -45,6 +60,20 @@ const handleAddComment = async () => {
 
   newComment.value = "";
 };
+
+const handleEditComment = (comment: Comment) => {
+  console.log("수정 클릭한 댓글:", comment);
+};
+
+const handleDeleteComment = async (comment: Comment) => {
+  const ok = confirm("정말 이 댓글을 삭제하시겠습니까?");
+  await fetchCommentDelete(problemSetId, comment.commentId);
+  if (!ok) return;
+
+  console.log("삭제 요청한 댓글:", comment.commentId);
+
+  await fetchCommentList(props.problemSetId);
+};
 </script>
 
 <template>
@@ -59,7 +88,12 @@ const handleAddComment = async () => {
       </div>
       <ul v-else class="flex flex-col gap-2">
         <li v-for="comment in commentList" :key="comment.commentId">
-          <CommentItem :comment="comment" />
+          <CommentItem
+            :comment="comment"
+            :is-own="comment.memberId === myMemberId"
+            @edit="handleEditComment(comment)"
+            @delete="handleDeleteComment(comment)"
+          />
         </li>
 
         <li v-if="hasNoComments" class="text-xs text-gray-500">
