@@ -19,9 +19,7 @@ export function useRanking() {
       error.value = null;
 
       const res = await ssafyApi.getAllUserScores();
-      console.log("점수 받아오는 api 호출");
       const scores = res.data.data ?? [];
-      console.log("응답값: ", res);
 
       const sorted = [...scores].sort(
         (a, b) => (b.score ?? 0) - (a.score ?? 0)
