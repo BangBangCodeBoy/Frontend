@@ -1,6 +1,5 @@
 import { ApiResponse, ssafyApi } from "@/shared/api/api";
-import { Comment } from "@/shared/api/generated";
-import { AxiosResponse } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
 import { ref } from "vue";
 import { IncorrectNoteResponse } from "@/shared/api/generated";
 
@@ -28,6 +27,17 @@ export const useIncorrectNoteList = () => {
       incorrectNoteList.value = res.data.data;
     } catch (e: any) {
       console.log("오답노트 리스트 조회 에러", e);
+
+      // ✅ 404인 경우는 "오답노트 없음"으로 간주 → 에러로 취급하지 않음
+      const axiosError = e as AxiosError<ApiResponse<IncorrectNoteResponse[]>>;
+      const status = axiosError.response?.status;
+
+      if (status === 404) {
+        incorrectNoteList.value = [];
+        error.value = null;
+        return;
+      }
+
       error.value =
         e instanceof Error
           ? e
