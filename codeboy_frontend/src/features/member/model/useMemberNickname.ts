@@ -68,7 +68,11 @@ export function useMemberNickname() {
 
     try {
       const response = await ssafyApi.getOneMemberInfo(memberId);
-      nicknameMap.value[memberId] = response.data.data.nickname;
+      const nickname = response.data.data?.nickname ?? "알 수 없음";
+
+      nicknameMap.value[memberId] = nickname;
+
+      return nickname;
     } catch (e: any) {
       nicknameError.value =
         e instanceof Error

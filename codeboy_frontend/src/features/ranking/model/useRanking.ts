@@ -1,17 +1,15 @@
 // src/features/ranking/model/useRanking.ts
 import { ref, onMounted } from "vue";
 import { ssafyApi } from "@/shared/api/api";
-import type { UserScore } from "@/shared/api/generated";
-
-import { useMemberProfile } from "@/features/member/model/useMemberProfile";
 import { RankingMember } from "@/pages/ranking/model/types";
+import { useMemberNickname } from "@/features/member/model/useMemberNickname";
 
 export function useRanking() {
   const top3 = ref<RankingMember[]>([]);
   const others = ref<RankingMember[]>([]);
   const isLoading = ref(false);
   const error = ref<Error | null>(null);
-  const { fetchNickname } = useMemberProfile();
+  const { fetchNickname, getNickname } = useMemberNickname();
 
   async function fetchScores() {
     try {
