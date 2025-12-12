@@ -1,38 +1,39 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import type { ChoiceQuestion } from "@/entities/question/model/question.types";
 import UserProblemCard from "@/widgets/user-problem-card/ui/UserProblemCard.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { useRoute, useRouter } from "vue-router";
 import { useProblemSolvingList } from "@/features/problem-set/model/useProblemSolvingList";
+import { useAddIncorrectNote } from "@/features/incorrect-note/model/useAddIncorrectNote";
 
 const route = useRoute();
-
 const router = useRouter();
 const { problemList, isLoading, error, fetchProblemList } =
   useProblemSolvingList();
-
 const problemSetId = Number(route.params.id);
+const { fetchIncorrectNote } = useAddIncorrectNote();
+const currentIndex = ref(0);
+const currentQuestion = computed(() => {
+  return problemList.value?.[currentIndex.value] ?? null;
+});
+const lastResult = ref<null | { correct: boolean; selectedIndex: number }>(
+  null
+);
 
 onMounted(() => {
   fetchProblemList(problemSetId);
 });
 
-const currentIndex = ref(0);
-
-const currentQuestion = computed(() => {
-  return problemList.value?.[currentIndex.value] ?? null;
-});
-
-const lastResult = ref<null | { correct: boolean; selectedIndex: number }>(
-  null
-);
-
-const handleAnswered = (payload: {
+const handleAnswered = async (payload: {
   correct: boolean;
   selectedIndex: number;
 }) => {
   lastResult.value = payload;
+
+  //오답노트에 추가하는 로직
+  if (!payload.correct && currentQuestion.value) {
+    await fetchIncorrectNote(currentQuestion.value.userProblemId, true);
+  }
 };
 // router.push({ name: "problemSet", params: { id } });
 const goNext = () => {

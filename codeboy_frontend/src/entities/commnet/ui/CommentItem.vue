@@ -28,15 +28,6 @@ const nickname = ref("");
 // 인라인 수정 상태
 const isEditing = ref(false);
 const draftContent = ref("");
-// comment.content가 바뀌면(리스트 새로고침 등) 수정 중이 아닐 때 draftContent도 동기화
-// watch(
-//   () => props.comment.content,
-//   (val) => {
-//     if (!isEditing.value) {
-//       draftContent.value = val ?? "";
-//     }
-//   }
-// );
 
 onMounted(async () => {
   if (props.comment.memberId) {
