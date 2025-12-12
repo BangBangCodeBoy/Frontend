@@ -18,10 +18,38 @@ import { useSessionStore } from "@/entities/session/model/sessionStore";
 
 const rootGuard = (to, from, next) => {
   const session = useSessionStore();
-  if (session.isLoggedIn) {
-    next({ name: "home" });
+  const isLoggedIn = session.isLoggedIn;
+
+  if (isLoggedIn) {
+    // 이미 home(또는 다른 내부 페이지)으로 가는 중이면 그냥 통과
+    if (
+      to.name === "home" ||
+      to.name === "problems" ||
+      to.name === "ranking" ||
+      to.name === "incorrectNotes" ||
+      to.name === "myPage" ||
+      to.name === "problemSet" ||
+      to.name === "problemSetComments" ||
+      to.name === "problemCreate" ||
+      to.name === "quizroom"
+    ) {
+      return next();
+    }
+
+    // root나 login에서 들어온 경우에만 home으로 보냄
+    if (to.name === "root" || to.name === "login") {
+      return next({ name: "home" });
+    }
+
+    return next();
   } else {
-    next({ name: "login" });
+    // 로그인 안 되어 있는데 login으로 가는 중이면 통과
+    if (to.name === "login" || to.name === "signup") {
+      return next();
+    }
+
+    // 그 외에는 로그인 페이지로
+    return next({ name: "login" });
   }
 };
 
