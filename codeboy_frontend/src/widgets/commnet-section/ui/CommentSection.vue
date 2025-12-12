@@ -69,10 +69,11 @@ const handleAddComment = async () => {
   newComment.value = "";
 };
 
-const handleUpdateComment = async (comment: Comment, newContent: string) => {
+const handleUpdateComment = async (comment: Comment, updateComment: string) => {
   if (!comment.commentId) return;
+  console.log("updateComment:", updateComment);
 
-  const trimmed = newContent.trim();
+  const trimmed = updateComment.trim();
   if (!trimmed) {
     alert("댓글 내용은 비워둘 수 없습니다.");
     return;
@@ -81,6 +82,7 @@ const handleUpdateComment = async (comment: Comment, newContent: string) => {
   const payload: CommentUpdateRequest = {
     content: trimmed,
   };
+  console.log("수정 요청 보내는 메시지:", payload);
 
   await fetchCommentUpdate(comment.commentId, payload);
 
@@ -90,10 +92,10 @@ const handleUpdateComment = async (comment: Comment, newContent: string) => {
 
 const handleDeleteComment = async (comment: Comment) => {
   const ok = confirm("정말 이 댓글을 삭제하시겠습니까?");
-  await fetchCommentDelete(problemSetId, comment.commentId);
   if (!ok) return;
 
   console.log("삭제 요청한 댓글:", comment.commentId);
+  await fetchCommentDelete(problemSetId, comment.commentId);
 
   await fetchCommentList(props.problemSetId);
 };
@@ -114,8 +116,10 @@ const handleDeleteComment = async (comment: Comment) => {
           <CommentItem
             :comment="comment"
             :is-own="comment.memberId === myMemberId"
-            @edit="handleEditComment(comment, $event)"
-            @delete="handleDeleteComment(comment)"
+            @update="
+              (updateComment) => handleUpdateComment(comment, updateComment)
+            "
+            @delete="() => handleDeleteComment(comment)"
           />
         </li>
 

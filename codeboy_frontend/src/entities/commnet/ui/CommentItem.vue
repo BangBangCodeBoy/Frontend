@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Comment } from "@/shared/api/generated";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useMemberNickname } from "@/features/member/model/useMemberNickname";
-import { ref } from "vue";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const props = defineProps<{
   comment: Comment;
@@ -10,7 +11,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "edit"): void;
+  (e: "update", content: string): void;
   (e: "delete"): void;
 }>();
 
@@ -26,16 +27,16 @@ const nickname = ref("");
 
 // 인라인 수정 상태
 const isEditing = ref(false);
-const draftContent = ref(props.comment.content ?? "");
+const draftContent = ref("");
 // comment.content가 바뀌면(리스트 새로고침 등) 수정 중이 아닐 때 draftContent도 동기화
-watch(
-  () => props.comment.content,
-  (val) => {
-    if (!isEditing.value) {
-      draftContent.value = val ?? "";
-    }
-  }
-);
+// watch(
+//   () => props.comment.content,
+//   (val) => {
+//     if (!isEditing.value) {
+//       draftContent.value = val ?? "";
+//     }
+//   }
+// );
 
 onMounted(async () => {
   if (props.comment.memberId) {
