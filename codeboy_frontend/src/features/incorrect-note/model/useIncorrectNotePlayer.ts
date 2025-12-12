@@ -1,7 +1,7 @@
 // src/features/incorrect-note/model/useIncorrectNotePlayer.ts
 import { computed, onMounted, ref } from "vue";
 import { useIncorrectNoteList } from "@/features/incorrect-note/model/useIncorrectNoteList";
-import { useDeleteIncorrectNote } from "@/features/incorrect-note/useDeleteIncorrectNote";
+import { useDeleteIncorrectNote } from "@/features/incorrect-note/model/useDeleteIncorrectNote";
 import type {
   UserProblem,
   IncorrectNoteResponse,

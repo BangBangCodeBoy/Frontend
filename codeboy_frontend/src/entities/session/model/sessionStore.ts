@@ -9,6 +9,9 @@ export const useSessionStore = defineStore("session", {
     refreshToken: null as string | null,
     memberId: null as number | null,
   }),
+  getters: {
+    isLoggedIn: (state) => !!state.accessToken,
+  },
 
   actions: {
     async login(request: LoginRequest): Promise<LoginResponse> {

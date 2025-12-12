@@ -14,12 +14,24 @@ import NotFoundPage from "@/pages/NotFoundPage.vue";
 import AppLayout from "@/app/layout/AppLayout.vue";
 import WaitingRoomPage from "@/pages/quiz-room-waiting/ui/WaitingRoomPage.vue";
 import ProblemCreate from "@/pages/problem/ProblemCreate.vue";
+import { useSessionStore } from "@/entities/session/model/sessionStore";
+
+const rootGuard = (to, from, next) => {
+  const session = useSessionStore();
+  if (session.isLoggedIn) {
+    next({ name: "home" });
+  } else {
+    next({ name: "login" });
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
+      name: "root",
+      beforeEnter: rootGuard,
       component: AppLayout,
       children: [
         {

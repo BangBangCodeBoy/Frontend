@@ -1,8 +1,9 @@
-// src/features/ranking/model/useRanking.ts
 import { ref, onMounted } from "vue";
 import { ssafyApi } from "@/shared/api/api";
 import { RankingMember } from "@/pages/ranking/model/types";
 import { useMemberNickname } from "@/features/member/model/useMemberNickname";
+import { ApiResponse } from "@/shared/api/api";
+import { AxiosError } from "axios";
 
 export function useRanking() {
   const top3 = ref<RankingMember[]>([]);
@@ -37,6 +38,8 @@ export function useRanking() {
       top3.value = mapped.slice(0, 3);
       others.value = mapped.slice(3);
     } catch (e: unknown) {
+      const axiosError = e as AxiosError<ApiResponse<RankingMember[]>>;
+      const status = axiosError.response?.status;
       error.value = e instanceof Error ? e : new Error("Unknown Error");
     } finally {
       isLoading.value = false;
