@@ -42,12 +42,14 @@ const selectedCategory = ref<FilterCategory>("ALL");
 const handleClickCreateProblem = () => {
   router.push({ name: "problemCreate" });
 };
+const handleClickAICreateProblem = () => {
+  router.push({ name: "AIProblemCreate" });
+};
 
 const handleClickProblem = (problem: UserProblemSet) => {
   const id = problem.userProblemSetId;
   const isOwn = problem.memberId === myMemberId ? "1" : "0";
   router.push({ name: "problemSet", params: { id }, query: { isOwn } });
-  console.log("문제 카드 클릭", id);
 };
 
 const filteredProblems = computed(() => {
@@ -65,9 +67,18 @@ const filteredProblems = computed(() => {
     <div class="flex items-center justify-between gap-3">
       <h2 class="text-lg font-semibold">시험 대비 문제</h2>
 
-      <Button type="button" @click="handleClickCreateProblem">
-        문제 만들기
-      </Button>
+      <div class="flex gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          @click="handleClickAICreateProblem"
+        >
+          AI로 문제 만들기
+        </Button>
+        <Button type="button" @click="handleClickCreateProblem">
+          문제 만들기
+        </Button>
+      </div>
     </div>
 
     <!-- 카테고리 필터 -->

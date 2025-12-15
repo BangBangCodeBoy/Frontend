@@ -15,6 +15,7 @@ import AppLayout from "@/app/layout/AppLayout.vue";
 import WaitingRoomPage from "@/pages/quiz-room-waiting/ui/WaitingRoomPage.vue";
 import ProblemCreate from "@/pages/problem/ProblemCreate.vue";
 import { useSessionStore } from "@/entities/session/model/sessionStore";
+import AIProblemCreate from "@/pages/problem/AIProblemCreate.vue";
 
 const rootGuard = (to, from, next) => {
   const session = useSessionStore();
@@ -77,6 +78,11 @@ const router = createRouter({
           path: PATH.PROBLEM_CREATE,
           name: "problemCreate",
           component: ProblemCreate,
+        },
+        {
+          path: PATH.AI_PROBLEM_CREATE,
+          name: "AIProblemCreate",
+          component: AIProblemCreate,
         },
         {
           path: PATH.PROBLEM_SETS_ID,

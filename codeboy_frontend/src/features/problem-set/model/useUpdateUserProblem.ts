@@ -14,6 +14,7 @@ export function useUpdateUserProblem() {
     isLoading.value = true;
     error.value = null;
 
+    console.log("업데이터 요청 쿼리 : ", payload);
     try {
       const response: AxiosResponse<ApiResponse<void>> =
         await ssafyApi.updateUserProblem(UserProblemId, payload);

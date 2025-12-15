@@ -252,8 +252,18 @@ function toApi(f: UserProblemForm) {
         class="w-full max-w-2xl flex justify-end gap-2"
       >
         <!-- 세트 삭제(전체) -->
+
         <Button
-          variant="ghost"
+          variant="default"
+          size="sm"
+          type="button"
+          @click="startEdit"
+          :disabled="isEditing"
+        >
+          수정
+        </Button>
+        <Button
+          variant="outline"
           size="sm"
           type="button"
           class="text-red-500"
@@ -263,19 +273,9 @@ function toApi(f: UserProblemForm) {
           세트 삭제
         </Button>
 
-        <Button
-          variant="outline"
-          size="sm"
-          type="button"
-          @click="startEdit"
-          :disabled="isEditing"
-        >
-          수정
-        </Button>
-
         <!-- 문제 삭제(현재 문제만) -->
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           type="button"
           class="text-red-500"
