@@ -35,7 +35,7 @@ const handleAnswered = async (payload: {
     await fetchIncorrectNote(currentQuestion.value.userProblemId, true);
   }
 };
-// router.push({ name: "problemSet", params: { id } });
+
 const goNext = () => {
   if (currentIndex.value < problemList.value.length - 1) {
     currentIndex.value++;
