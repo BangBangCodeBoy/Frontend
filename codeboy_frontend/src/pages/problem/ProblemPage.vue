@@ -8,11 +8,16 @@ import { useProblemSetList } from "@/features/problem-set/model/useProblemSetLis
 import { useMemberNickname } from "@/features/member/model/useMemberNickname";
 import ProblemCategoryFilter from "@/features/problem-set/ui/ProblemCategoryFilter.vue";
 import type { FilterCategory } from "@/features/problem-set/model/filterCategory";
+import { UserProblem, UserProblemSet } from "@/shared/api/generated";
+import { useSessionStore } from "@/entities/session/model/sessionStore";
 
 const router = useRouter();
 const { problemSetList, isLoading, error, fetchProblemList } =
   useProblemSetList();
 const { fetchNickname, getNickname } = useMemberNickname();
+
+const session = useSessionStore();
+const myMemberId = session.memberId;
 
 onMounted(() => {
   fetchProblemList();
@@ -38,8 +43,10 @@ const handleClickCreateProblem = () => {
   router.push({ name: "problemCreate" });
 };
 
-const handleClickProblem = (id: number) => {
-  router.push({ name: "problemSet", params: { id } });
+const handleClickProblem = (problem: UserProblemSet) => {
+  const id = problem.userProblemSetId;
+  const isOwn = problem.memberId === myMemberId ? "1" : "0";
+  router.push({ name: "problemSet", params: { id }, query: { isOwn } });
   console.log("문제 카드 클릭", id);
 };
 
@@ -78,7 +85,7 @@ const filteredProblems = computed(() => {
         :category="problem.category"
         :nickname="getNickname(problem.memberId)"
         :comment-count="problem.commentCount"
-        @click="() => handleClickProblem(problem.userProblemSetId)"
+        @click="() => handleClickProblem(problem)"
       />
     </div>
   </div>

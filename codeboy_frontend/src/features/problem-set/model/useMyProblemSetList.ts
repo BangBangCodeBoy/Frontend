@@ -3,8 +3,8 @@ import { AxiosResponse } from "axios";
 import { UserProblemSet } from "@/shared/api/generated";
 import { ref } from "vue";
 
-export function useProblemSetList() {
-  const problemSetList = ref<UserProblemSet[]>([]);
+export function useMyProblemSetList() {
+  const myProblemSetList = ref<UserProblemSet[]>([]);
   const isLoading = ref(false);
   const error = ref<Error | null>(null);
 
@@ -24,7 +24,7 @@ export function useProblemSetList() {
         );
       }
 
-      problemSetList.value = response.data.data;
+      myProblemSetList.value = response.data.data;
     } catch (e: any) {
       console.log("문제 리스트 조회 에러:", e);
       error.value =
@@ -37,7 +37,7 @@ export function useProblemSetList() {
   };
 
   return {
-    problemSetList,
+    myProblemSetList,
     isLoading,
     error,
     fetchMyProblemList,

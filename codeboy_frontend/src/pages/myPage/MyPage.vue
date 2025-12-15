@@ -2,13 +2,15 @@
 <script setup lang="ts">
 import MemberProfileCard from "@/features/member/ui/MemberProfileCard.vue";
 import ProblemCard from "@/entities/problem/ui/ProblemCard.vue";
-import { useProblemSetList } from "@/features/problem-set/model/useMyProblemSetList";
+import { useProblemSetList } from "@/features/problem-set/model";
 import { useRouter } from "vue-router";
 import { onMounted, ref, watch } from "vue";
 import { useMemberNickname } from "@/features/member/model/useMemberNickname";
+import { useMyProblemSetList } from "@/features/problem-set/model";
 
-const { problemSetList, isLoading, error, fetchMyProblemList } =
-  useProblemSetList();
+const { myProblemSetList, isLoading, error, fetchMyProblemList } =
+  useMyProblemSetList();
+
 const { fetchNickname, getNickname } = useMemberNickname();
 
 const router = useRouter();
@@ -18,7 +20,7 @@ onMounted(() => {
 
 const nickname = ref<string>("");
 
-watch(problemSetList, async (list) => {
+watch(myProblemSetList, async (list) => {
   if (!list.length) return;
 
   const memberId = list[0].memberId;
@@ -26,7 +28,7 @@ watch(problemSetList, async (list) => {
 });
 
 const handleClickProblem = (id: number) => {
-  router.push({ name: "problemSet", params: { id } });
+  router.push({ name: "problemSet", params: { id }, query: { isOwn: "1" } });
   console.log("문제 카드 클릭", id);
 };
 </script>
@@ -45,7 +47,7 @@ const handleClickProblem = (id: number) => {
       <!-- 문제 카드 리스트 -->
       <div class="flex flex-col gap-3">
         <ProblemCard
-          v-for="problem in problemSetList"
+          v-for="problem in myProblemSetList"
           :key="problem.userProblemSetId"
           :title="problem.problemSetTitle"
           :category="problem.category"

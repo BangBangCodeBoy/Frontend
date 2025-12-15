@@ -9,7 +9,7 @@ export function useDeleteUserProblemSet() {
   const deleteUserProblemSet = async (UserProblemSetId: number) => {
     isLoading.value = true;
     error.value = null;
-
+    console.log("삭제할 문제 세트 아이디", UserProblemSetId);
     try {
       const response: AxiosResponse<ApiResponse<void>> =
         await ssafyApi.deleteUserProblemSet(UserProblemSetId);
