@@ -25,8 +25,6 @@ const avatarText = computed(() => {
 
 <template>
   <section class="w-full max-w-2xl mx-auto">
-    <h1 class="Subtitle1 font-semibold text-slate-900 mb-6">마이 페이지</h1>
-
     <!-- 메시지 영역 -->
     <div class="space-y-2 mb-4">
       <p
