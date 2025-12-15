@@ -14,8 +14,19 @@ const passwordCheck = ref("");
 const nickname = ref("");
 const email = ref("");
 
+function isValidEmail(value: string) {
+  // RFC 5322를 단순화한 실무용 정규식
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  return emailRegex.test(value);
+}
+
 // 회원가입 제출
 function onSubmit() {
+  // 이메일 유효성 검사
+  if (!isValidEmail(email.value)) {
+    alert("올바른 이메일 형식을 입력해주세요.");
+    return;
+  }
   // 패스워드 확인 체크
   if (password.value !== passwordCheck.value) {
     alert("비밀번호가 일치하지 않습니다.");
