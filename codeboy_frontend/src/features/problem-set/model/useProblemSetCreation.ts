@@ -96,6 +96,75 @@ export function useProblemSetCreation() {
     successMessage.value = "문제가 추가되었습니다.";
   }
 
+  async function submitAllWithProblems(
+    allProblems: UserProblemForm[],
+    problemTitle: string,
+    category: Category
+  ) {
+    errorMessage.value = null;
+    successMessage.value = null;
+
+    const metaError = validateMeta();
+    if (metaError) {
+      errorMessage.value = metaError;
+      return;
+    }
+
+    if (!allProblems.length) {
+      errorMessage.value = "최소 1개 이상의 문제를 만들어야 합니다.";
+      return;
+    }
+
+    try {
+      isSubmitting.value = true;
+
+      // 1) 문제 세트 생성
+      const problemSetPayload = {
+        problemSetTitle: problemTitle,
+        createdAt: dayjs().toISOString(),
+        category: category,
+      };
+
+      const setRes: AxiosResponse<ApiResponse<number>> =
+        await ssafyApi.createMyUserProblemSet(problemSetPayload as any);
+
+      if (setRes.data.status !== "CREATED" || !setRes.data.data) {
+        throw new Error(
+          setRes.data.message ?? "문제 세트 생성에 실패했습니다."
+        );
+      }
+      const userProblemSetId = setRes.data.data;
+
+      // 2) 문제들 일괄 등록
+      const problemPayload = allProblems.map((p) => ({
+        problemDescription: p.problemDescription,
+        choice1: p.choice1,
+        choice2: p.choice2,
+        choice3: p.choice3,
+        choice4: p.choice4,
+        answerChoice: Number(p.answerChoice),
+        userProblemSetId,
+      }));
+
+      const probRes = await ssafyApi.createUserProblems(
+        userProblemSetId,
+        problemPayload
+      );
+      if (probRes.status !== 200 && probRes.status !== 201) {
+        throw new Error(probRes.data.message ?? "문제 등록에 실패했습니다.");
+      }
+
+      successMessage.value = "문제 세트가 성공적으로 등록되었습니다.";
+      router.push({ name: "problems" });
+      return userProblemSetId;
+    } catch (e: any) {
+      errorMessage.value =
+        e?.message ?? "문제 세트 등록 중 알 수 없는 오류가 발생했습니다.";
+    } finally {
+      isSubmitting.value = false;
+    }
+  }
+
   // 🔸 “완성하기” 버튼: (현재 문제도 등록 대상에 포함) → 세트 생성 → 문제 목록 생성 → problems 페이지로 이동
   async function submitAll() {
     errorMessage.value = null;
@@ -193,5 +262,6 @@ export function useProblemSetCreation() {
     // actions
     addCurrentProblem,
     submitAll,
+    submitAllWithProblems,
   };
 }
