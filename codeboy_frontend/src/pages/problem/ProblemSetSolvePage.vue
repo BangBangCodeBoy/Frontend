@@ -296,6 +296,7 @@ function toApi(f: UserProblemForm) {
 
       <UserProblemCard
         v-else-if="currentQuestion"
+        :key="currentQuestion.userProblemId ?? currentIndex"
         :question="currentQuestion"
         @answered="handleAnswered"
       />
