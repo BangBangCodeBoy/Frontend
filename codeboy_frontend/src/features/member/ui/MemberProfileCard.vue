@@ -78,7 +78,7 @@ const avatarText = computed(() => {
           class="inline-flex items-center rounded-full border border-primary-500 px-3 py-1.5 text-xs font-medium text-primary-600 hover:bg-indigo-50 transition-colors"
           @click="startEdit"
         >
-          프로필 수정
+          수정
         </button>
       </header>
 

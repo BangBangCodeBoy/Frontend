@@ -35,7 +35,7 @@ const handleClickProblem = (id: number) => {
 
 <template>
   <main class="min-h-screen bg-slate-50">
-    <div class="mx-auto max-w-lg px-4 py-10">
+    <div class="mx-auto max-w-lg px-4">
       <!-- 프로필 카드 -->
       <MemberProfileCard />
 

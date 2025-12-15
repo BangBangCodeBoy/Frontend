@@ -98,6 +98,7 @@ export function useMemberProfile() {
 
       const response: AxiosResponse<any> = await ssafyApi.updateMember(payload);
       const data = response.data;
+      await fetchMember();
 
       if (data.status !== "OK") {
         throw new Error(data.message ?? "회원 정보 수정에 실패했습니다.");
@@ -139,5 +140,6 @@ export function useMemberProfile() {
     startEdit,
     cancelEdit,
     submitEdit,
+    refresh: fetchMember,
   };
 }
