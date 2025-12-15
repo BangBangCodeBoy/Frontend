@@ -1,12 +1,11 @@
 <!-- src/pages/problem/ProblemSetCreatePage.vue -->
 <script setup lang="ts">
-import { UserProblemSetCategory as Category } from "@/shared/api/generated";
-import Button from "@/components/ui/button/Button.vue";
-import { Field, FieldSeparator } from "@/components/ui/field";
+import { FieldSeparator } from "@/components/ui/field";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import QuestionCreationForm from "@/features/problem-set/ui/QuestionCreationForm.vue";
 import { useProblemSetCreation } from "@/features/problem-set/model/useProblemSetCreation";
+import { PROBLEM_SET_CATEGORY_OPTIONS } from "@/entities/problem-set/model/category-options";
 
 const {
   problemSetTitle,
@@ -20,11 +19,6 @@ const {
   addCurrentProblem,
   submitAll,
 } = useProblemSetCreation();
-
-const categoryOptions = [
-  { value: Category.INFOENGINEERING, label: "정보처리기사" },
-  { value: Category.SQLD, label: "SQLD" },
-];
 </script>
 
 <template>
@@ -86,7 +80,7 @@ const categoryOptions = [
           <Label class="text-xs font-medium text-slate-700"> 카테고리 </Label>
           <div class="flex flex-wrap gap-2">
             <button
-              v-for="cat in categoryOptions"
+              v-for="cat in PROBLEM_SET_CATEGORY_OPTIONS"
               :key="cat.value"
               type="button"
               class="rounded-full border px-3 py-1 text-xs transition-colors"

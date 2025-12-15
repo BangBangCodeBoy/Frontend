@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toTypedSchema } from "@vee-validate/zod";
 import { Form, Field as VeeField } from "vee-validate";
-import { h } from "vue";
+import { h, ref } from "vue";
 import { toast } from "vue-sonner";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { PROBLEM_SET_CATEGORY_OPTIONS } from "@/entities/problem-set/model/category-options";
+import { Category } from "@/entities/types";
+import { UserProblemSetCategory } from "@/shared/api/generated";
 const formSchema = toTypedSchema(
   z.object({
     username: z
@@ -33,6 +36,8 @@ function onSubmit(values: any) {
     ),
   });
 }
+
+const problemSetCategory = ref<UserProblemSetCategory | null>(null);
 </script>
 
 <template>
@@ -69,6 +74,26 @@ function onSubmit(values: any) {
             </VeeField>
           </FieldGroup>
         </form>
+        <!-- 카테고리 선택 -->
+        <div class="space-y-1.5">
+          <Label class="text-xs font-medium text-slate-700"> 카테고리 </Label>
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="cat in PROBLEM_SET_CATEGORY_OPTIONS"
+              :key="cat.value"
+              type="button"
+              class="rounded-full border px-3 py-1 text-xs transition-colors"
+              :class="
+                problemSetCategory === cat.value
+                  ? 'border-primary-500 bg-primary-50 text-primary-600'
+                  : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'
+              "
+              @click="problemSetCategory = cat.value"
+            >
+              {{ cat.label }}
+            </button>
+          </div>
+        </div>
         <DialogFooter>
           <Button type="submit" form="dialogForm"> 방 만들기 </Button>
         </DialogFooter>
