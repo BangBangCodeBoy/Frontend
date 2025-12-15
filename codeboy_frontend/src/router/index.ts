@@ -67,47 +67,56 @@ const router = createRouter({
           path: PATH.HOME,
           name: "home",
           component: QuizRoomsPage,
+          meta: { tab: "home" },
         },
 
         {
           path: PATH.PROBLEMS,
           name: "problems",
           component: ProblemPage,
+          meta: { tab: "problems" },
         },
         {
           path: PATH.PROBLEM_CREATE,
           name: "problemCreate",
           component: ProblemCreate,
+          meta: { tab: "problems" },
         },
         {
           path: PATH.AI_PROBLEM_CREATE,
           name: "AIProblemCreate",
           component: AIProblemCreate,
+          meta: { tab: "problems" },
         },
         {
           path: PATH.PROBLEM_SETS_ID,
           name: "problemSet",
           component: ProblemSetSolvePage,
+          meta: { tab: "problems" },
         },
         {
           path: PATH.PROBLEM_SETS_ID_COMMENTS,
           name: "problemSetComments",
           component: ProblemsetCommentPage,
+          meta: { tab: "problems" },
         },
         {
           path: PATH.QUIZROOM,
           name: "quizroom",
           component: QuizRoomPage,
+          meta: { tab: "home" },
         },
         {
           path: PATH.RANKING,
           name: "ranking",
           component: RankingPage,
+          meta: { tab: "ranking" },
         },
         {
           path: PATH.INCORRECT_NOTES,
           name: "incorrectNotes",
           component: IncorrectNotesPage,
+          meta: { tab: "incorrectNotes" },
         },
         {
           path: PATH.MY_PAGE,

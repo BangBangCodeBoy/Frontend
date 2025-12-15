@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import {
   Home,
   Hat,
@@ -10,6 +12,7 @@ import {
   OrangeTrophy,
 } from "@/assets/icons/nav";
 
+const route = useRoute();
 const tabs = [
   { label: "홈", defaultIcon: Home, activeIcon: OrangeHome, name: "home" },
   {
@@ -31,6 +34,10 @@ const tabs = [
     name: "incorrectNotes",
   },
 ];
+
+const activeTab = computed(() => (route.meta.tab as string) ?? route.name);
+
+const isActive = (tabName: string) => activeTab.value === tabName;
 </script>
 
 <template>
@@ -42,14 +49,12 @@ const tabs = [
           class="w-full flex flex-col items-center gap-1 py-2"
         >
           <component
-            :is="$route.name === tab.name ? tab.activeIcon : tab.defaultIcon"
+            :is="isActive(tab.name) ? tab.activeIcon : tab.defaultIcon"
           />
 
           <span
             class="Body2"
-            :class="
-              $route.name === tab.name ? 'text-primary-500' : 'text-gray-950'
-            "
+            :class="isActive(tab.name) ? 'text-primary-500' : 'text-gray-950'"
           >
             {{ tab.label }}
           </span>
