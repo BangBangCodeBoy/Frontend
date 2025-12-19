@@ -1,0 +1,60 @@
+import { ref, onMounted } from "vue";
+import { ssafyApi } from "@/shared/api/api";
+import { RankingMember } from "@/pages/ranking/model/types";
+import { useMemberNickname } from "@/features/member/model/useMemberNickname";
+import { ApiResponse } from "@/shared/api/api";
+import { AxiosError } from "axios";
+
+export function useRanking() {
+  const top3 = ref<RankingMember[]>([]);
+  const others = ref<RankingMember[]>([]);
+  const isLoading = ref(false);
+  const error = ref<Error | null>(null);
+  const { fetchNickname, getNickname } = useMemberNickname();
+
+  async function fetchScores() {
+    try {
+      isLoading.value = true;
+      error.value = null;
+
+      const res = await ssafyApi.getAllUserScores();
+      const scores = res.data.data ?? [];
+
+      const sorted = [...scores].sort(
+        (a, b) => (b.score ?? 0) - (a.score ?? 0)
+      );
+
+      // 멤버 닉네임 매핑 (병렬 처리)
+      const mapped = await Promise.all(
+        sorted.map(async (item) => {
+          const nickname = await fetchNickname(item.memberId!);
+          return {
+            nickname,
+            score: item.score ?? 0,
+          };
+        })
+      );
+
+      top3.value = mapped.slice(0, 3);
+      others.value = mapped.slice(3);
+    } catch (e: unknown) {
+      const axiosError = e as AxiosError<ApiResponse<RankingMember[]>>;
+      const status = axiosError.response?.status;
+      error.value = e instanceof Error ? e : new Error("Unknown Error");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  onMounted(() => {
+    void fetchScores();
+  });
+
+  return {
+    top3,
+    others,
+    isLoading,
+    error,
+    refetch: fetchScores,
+  };
+}

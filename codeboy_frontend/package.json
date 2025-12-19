@@ -9,14 +9,49 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
+    "generate:api": "orval"
   },
   "dependencies": {
-    "vue": "^3.5.25"
+    "@radix-ui/react-slot": "^1.2.4",
+    "@vee-validate/zod": "^4.15.1",
+    "@vueuse/core": "^14.1.0",
+    "axios": "^1.13.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.555.0",
+    "lucide-vue-next": "^0.555.0",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "reka-ui": "^2.6.1",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^3.4.4",
+    "tailwindcss-animate": "^1.0.7",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3",
+    "vue-sonner": "^2.0.9",
+    "zod": "^4.1.13",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@commander-js/extra-typings": "^14.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/vue-fontawesome": "^3.1.2",
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.2",
+    "autoprefixer": "^10.4.22",
+    "commander": "^14.0.2",
+    "orval": "^7.17.0",
+    "postcss": "^8.5.6",
+    "sass-embedded": "^1.93.3",
+    "tailwindcss": "^3.4.18",
+    "unplugin-vue-components": "^30.0.0",
     "vite": "^7.2.4",
-    "vite-plugin-vue-devtools": "^8.0.5"
+    "vite-plugin-vue-devtools": "^8.0.5",
+    "vite-plugin-vue-svg": "^0.1.0",
+    "vite-svg-loader": "^5.1.0"
   }
 }
